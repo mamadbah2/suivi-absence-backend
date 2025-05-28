@@ -1,4 +1,4 @@
-package sn.dev.suiviabsence.web.dto.response;
+package sn.dev.suiviabsence.mobile.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
