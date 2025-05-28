@@ -1,7 +1,4 @@
-Voici une proposition de `README.md` pour ton projet Spring Boot "suivi-absence-backend" :
-
-
-Ce projet est le service backend pour une application de suivi des absences, développé avec Spring Boot. Il gère les entités liées aux utilisateurs, étudiants, cours, modules, classes et absences.
+Ce projet est le service backend pour une application de suivi des absences, développé avec Spring Boot. Il gère les entités liées aux utilisateurs, étudiants, cours, modules, classes et absences a ISM
 
 ## Technologies Utilisées
 
