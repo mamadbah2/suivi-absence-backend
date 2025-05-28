@@ -20,7 +20,7 @@ public interface AbsenceController {
     ResponseEntity<Absence> filterAbsence(@PathVariable String presence, String classe);
 
     @PostMapping("/validate")
-    ResponseEntity<Absence> validateJustification(Absence absence);
+    ResponseEntity<Map<String, Object>>validateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
     @GetMapping("/absent/{classe}")
     ResponseEntity<List<Absence>> getAbsenceByClasse(@PathVariable String classe);
