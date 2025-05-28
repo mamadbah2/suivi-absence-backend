@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class Classe {
     String id;
+    String nom;
     Filiere filiere;
     Niveau niveau;
     List<Etudiant> etudiants;

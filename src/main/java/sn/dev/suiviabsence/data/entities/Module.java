@@ -10,4 +10,5 @@ public class Module {
     String id;
     String nom;
     Classe classe;
+    String nomProf;
 }
