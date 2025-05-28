@@ -7,7 +7,6 @@ import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;
 
 @AllArgsConstructor
-@NoArgsConstructor
 public class MapperAbsence {
 
     public static AbsenceSimpleResponseDto toDto(Absence absence) {
