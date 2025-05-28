@@ -5,7 +5,7 @@ Ce projet est le service backend pour une application de suivi des absences, dé
 * **Spring Boot**
 * **Java 17**
 * **Maven** (pour la gestion des dépendances et la construction)
-* **Base de données** MongoDB
+* **Base de données**: MongoDB
 
 ## Structure du Projet
 
