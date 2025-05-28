@@ -2,14 +2,13 @@ package sn.dev.suiviabsence.web.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.data.entities.Absence;
+import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/absences")
 public interface AbsenceController {
@@ -25,4 +24,7 @@ public interface AbsenceController {
 
     @GetMapping("/absent/{classe}")
     ResponseEntity<List<Absence>> getAbsenceByClasse(@PathVariable String classe);
+
+    @PutMapping("/update/jutification")
+    ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 }

@@ -16,6 +16,7 @@ public class AbsenceSimpleResponseDto {
     private String module;
     private String date;
     private String heure;
+    private String justification;
     private String status;
 
     public void AbsenceResponse(Absence absence) {
@@ -24,6 +25,7 @@ public class AbsenceSimpleResponseDto {
         this.prenom = absence.getEtudiant().getPrenom();
         this.classe = absence.getCours().getClasse().getNom();
         this.module = absence.getCours().getModule().getNom();
+        this.justification = absence.getJustification();
         this.date = absence.getDate();
         this.heure = absence.getHeure();
         this.status = absence.getStatus();

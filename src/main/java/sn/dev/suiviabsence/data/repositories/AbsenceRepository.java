@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import sn.dev.suiviabsence.data.entities.Absence;
 
 
-@Repository
-public interface AbsenceRepository extends MongoRepository<Absence, String> {
-}
+    @Repository
+    public interface AbsenceRepository extends MongoRepository<Absence, String> {
+    }
