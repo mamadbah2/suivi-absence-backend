@@ -12,6 +12,6 @@ FROM openjdk:11-jre-slim
 # Set the working directory in the container
 WORKDIR /app
 # Copy the built JAR file from the previous stage to the container
-COPY from=build /suivi-absence/target/suivi-absence-0.0.1-SNAPSHOT.jar ./
+COPY from=build ./target/suivi-absence-0.0.1-SNAPSHOT.jar ./
 # Set the command to run the application
 CMD ["java", "-jar", "my-application.jar"]
