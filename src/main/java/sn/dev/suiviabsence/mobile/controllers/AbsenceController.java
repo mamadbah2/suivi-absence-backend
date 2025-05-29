@@ -1,4 +1,4 @@
-package sn.dev.suiviabsence.web.controllers;
+package sn.dev.suiviabsence.mobile.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/absences")
+@RequestMapping("/absences-mobiles")
 public interface AbsenceController {
 
     @GetMapping("/")
