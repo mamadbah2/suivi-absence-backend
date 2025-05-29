@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import sn.dev.suiviabsence.core.domain.User;
 import sn.dev.suiviabsence.infrastructure.persistence.UserRepository;
 import sn.dev.suiviabsence.core.service.UserService;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
 @Service
@@ -15,6 +17,7 @@ import sn.dev.suiviabsence.core.service.UserService;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public User getCurrentUser() {
@@ -44,5 +47,17 @@ public class UserServiceImpl implements UserService {
 
     log.warn("Principal n'est pas une instance de UserDetails");
     return null;
+  }
+
+  @Override
+  public User authenticate(String email, String password) {
+    log.info("Tentative d'authentification pour l'email: {}", email);
+
+    return userRepository.findByEmail(email)
+        .filter(user -> passwordEncoder.matches(password, user.getPassword()))
+        .orElseThrow(() -> {
+          log.error("Échec d'authentification pour l'email: {}", email);
+          return new BadCredentialsException("Email ou mot de passe incorrect");
+        });
   }
 }

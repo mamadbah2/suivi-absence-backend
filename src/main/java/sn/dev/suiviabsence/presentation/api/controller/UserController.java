@@ -1,15 +1,15 @@
 package sn.dev.suiviabsence.presentation.api.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import sn.dev.suiviabsence.presentation.api.dto.response.UserResponseDto;
+import sn.dev.suiviabsence.presentation.api.dto.request.UserLoginDto;
+import java.util.Map;
 
-@RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public interface UserController {
-
-  @GetMapping("/me")
-  ResponseEntity<UserResponseDto> getCurrentUser();
+    
+    @PostMapping("/auth")
+    ResponseEntity<Map<String, Object>> authenticate(@RequestBody UserLoginDto userLoginDto);
 }

@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import sn.dev.suiviabsence.core.domain.Absence;
 import sn.dev.suiviabsence.presentation.api.dto.response.DernierPointageDto;
+import sn.dev.suiviabsence.presentation.api.dto.response.AbsenceSimpleResponseDto;
+import sn.dev.suiviabsence.presentation.api.dto.request.AbsenceRequestDto;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MapperAbsence {
@@ -33,5 +35,27 @@ public class MapperAbsence {
         .justification(absence.getJustification())
         .justificatif(absence.getJustificatif())
         .build();
+  }
+
+  public static AbsenceSimpleResponseDto toSimpleDto(Absence absence) {
+    return new AbsenceSimpleResponseDto(
+        absence.getEtudiant().getMatricule(),
+        absence.getEtudiant().getNom(),
+        absence.getEtudiant().getPrenom(),
+        absence.getCours().getClasse().getNom(),
+        absence.getCours().getModule().getNom(),
+        absence.getDate(),
+        absence.getHeure(),
+        absence.getJustification(),
+        absence.getStatus());
+  }
+
+  public static Absence toEntity(AbsenceRequestDto absenceDto) {
+    Absence absence = new Absence();
+    absence.setDate(absenceDto.getDate());
+    absence.setHeure(absenceDto.getHeure());
+    absence.setJustification(absenceDto.getJustification());
+    absence.setStatus(absenceDto.getStatus());
+    return absence;
   }
 }
