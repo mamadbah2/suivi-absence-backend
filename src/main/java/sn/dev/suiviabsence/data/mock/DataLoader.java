@@ -38,7 +38,7 @@ public class DataLoader {
         vigile1.setPrenom("Ibrahima");
         vigile1.setEmail("ibrahima.sow@groupeism.sn");
         vigile1.setPassword("vigile1");
-        vigile1.setRole(Role.Vigile);
+        vigile1.setRole(Role.VIGILE);
         userRepository.save(vigile1);
 
         User vigile2 = new User();
@@ -46,7 +46,7 @@ public class DataLoader {
         vigile2.setPrenom("Aissatou");
         vigile2.setEmail("aissatou.diallo@groupeism.sn");
         vigile2.setPassword("vigile2");
-        vigile2.setRole(Role.Vigile);
+        vigile2.setRole(Role.VIGILE);
         userRepository.save(vigile2);
 
 
@@ -87,7 +87,7 @@ public class DataLoader {
         e1.setPrenom("Aminata");
         e1.setEmail("aminata.fall@ism.edu.sn");
         e1.setPassword("password1");
-        e1.setRole(Role.Etudiant);
+        e1.setRole(Role.ETUDIANT);
         e1.setMatricule("ETD001");
         e1.setClasse(classe1);
         etudiantRepository.save(e1);
@@ -97,7 +97,7 @@ public class DataLoader {
         e2.setPrenom("Moussa");
         e2.setEmail("moussa.diop@@ism.edu.sn");
         e2.setPassword("password2");
-        e2.setRole(Role.Etudiant);
+        e2.setRole(Role.ETUDIANT);
         e2.setMatricule("ETD002");
         e2.setClasse(classe2);
         etudiantRepository.save(e2);
@@ -107,7 +107,7 @@ public class DataLoader {
         e3.setPrenom("Fatima");
         e3.setEmail("fatima.keita@ism.edu.sn");
         e3.setPassword("password3");
-        e3.setRole(Role.Etudiant);
+        e3.setRole(Role.ETUDIANT);
         e3.setMatricule("ETD003");
         e3.setClasse(classe3);
         etudiantRepository.save(e3);
@@ -117,7 +117,7 @@ public class DataLoader {
         e4.setPrenom("Anna");
         e4.setEmail("anna.Ndiaye@ism.edu.sn");
         e4.setPassword("password4");
-        e4.setRole(Role.Etudiant);
+        e4.setRole(Role.ETUDIANT);
         e4.setMatricule("ETD004");
         e4.setClasse(classe4);
         etudiantRepository.save(e4);
@@ -127,7 +127,7 @@ public class DataLoader {
         e5.setPrenom("Bobo");
         e5.setEmail("bobo.bah@ism.edu.sn");
         e5.setPassword("password5");
-        e5.setRole(Role.Etudiant);
+        e5.setRole(Role.ETUDIANT);
         e5.setMatricule("ETD005");
         e5.setClasse(classe5);
         etudiantRepository.save(e5);

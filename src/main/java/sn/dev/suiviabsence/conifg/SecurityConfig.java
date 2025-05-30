@@ -36,8 +36,11 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/app/auth/**").permitAll()
-                        .requestMatchers("/absences/mobiles/**").permitAll()
+//                        .requestMatchers("/absences/mobiles/**").permitAll()
                         .requestMatchers("/error").permitAll() // 👈 allow access to error page
+                        .requestMatchers("/absences/mobiles/premiers").hasRole("VIGILE")
+                        .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")
+                        .requestMatchers("/absences/mobiles/pointer").hasRole("VIGILE")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(unknownURI, jwtAuthFilter.getClass())

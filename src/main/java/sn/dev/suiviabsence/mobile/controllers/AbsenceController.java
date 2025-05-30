@@ -1,6 +1,7 @@
 package sn.dev.suiviabsence.mobile.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.data.entities.Absence;
@@ -24,14 +25,17 @@ public interface AbsenceController {
 //    @PostMapping("/validate")
 //    ResponseEntity<Map<String, Object>>validateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
+    @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/premiers")
     ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers(@RequestParam String date);
 
+    @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/rechercher")
     ResponseEntity<PointageEtudiantResponse> rechercherEtudiantPourCours(
             @RequestParam String matricule// Format : "2025-05-29"
     );
 
+    @PreAuthorize("hasRole('VIGILE')")
     @PostMapping("/pointer")
     ResponseEntity<String> pointerEtudiant(
             @RequestParam String matricule
