@@ -1,4 +1,4 @@
-package com.suiviabsence.mobile.dto.request;
+package com.suiviabsence.mobile.dto.requests;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
