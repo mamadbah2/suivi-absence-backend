@@ -8,6 +8,7 @@ import sn.dev.suiviabsence.data.entities.Module;
 import sn.dev.suiviabsence.data.enums.Filiere;
 import sn.dev.suiviabsence.data.enums.Niveau;
 import sn.dev.suiviabsence.data.enums.Role;
+import sn.dev.suiviabsence.data.enums.Status;
 import sn.dev.suiviabsence.data.repositories.*;
 
 @Component
@@ -277,7 +278,7 @@ public class DataLoader {
         Absence a1 = new Absence();
         a1.setDate("2024-05-25");
         a1.setHeure("08:40");
-        a1.setStatus("retard");
+        a1.setStatus(Status.ABSENT);
         a1.setJustification("Retard de transport");
         a1.setEtudiant(e1);
         a1.setCours(cours1);
@@ -286,7 +287,7 @@ public class DataLoader {
         Absence a2 = new Absence();
         a2.setDate("2024-05-27");
         a2.setHeure("13:00");
-        a2.setStatus("absent");
+        a2.setStatus(Status.RETARD);
         a2.setJustification(null);
         a2.setEtudiant(e1);
         a2.setCours(cours3);

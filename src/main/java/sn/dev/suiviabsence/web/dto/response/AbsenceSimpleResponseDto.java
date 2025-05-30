@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sn.dev.suiviabsence.data.entities.Absence;
+import sn.dev.suiviabsence.data.enums.Status;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class AbsenceSimpleResponseDto {
     private String date;
     private String heure;
     private String justification;
-    private String status;
+    private Status status;
 
     public void AbsenceResponse(Absence absence) {
         this.matricule = absence.getEtudiant().getMatricule();

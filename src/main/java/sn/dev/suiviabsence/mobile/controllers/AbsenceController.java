@@ -4,27 +4,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.data.entities.Absence;
+import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;
 
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/absences-mobiles")
+@RequestMapping("/absences/mobiles")
 public interface AbsenceController {
 
-    @GetMapping("/")
-    ResponseEntity<List<AbsenceSimpleResponseDto>> getAllAbsences();
+//    @GetMapping("/")
+//    ResponseEntity<List<AbsenceSimpleResponseDto>> getAllAbsences();
 
-    @GetMapping("/filtre/{presence}/{classe}")
-    ResponseEntity<Absence> filterAbsence(@PathVariable String presence, String classe);
+//    @GetMapping("/filtre/{presence}/{classe}")
+//    ResponseEntity<Absence> filterAbsence(@PathVariable String presence, String classe);
 
-    @PostMapping("/validate")
-    ResponseEntity<Map<String, Object>>validateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
+//    @PostMapping("/validate")
+//    ResponseEntity<Map<String, Object>>validateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
-    @GetMapping("/absent/{classe}")
-    ResponseEntity<List<Absence>> getAbsenceByClasse(@PathVariable String classe);
+    @GetMapping("/premiers")
+    ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers(@RequestParam String date);
 
-    @PutMapping("/update/jutification")
-    ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
+    @GetMapping("/rechercher")
+    ResponseEntity<PointageEtudiantResponse> rechercherEtudiantPourCours(
+            @RequestParam String matricule// Format : "2025-05-29"
+    );
+
+    @PostMapping("/pointer")
+    ResponseEntity<String> pointerEtudiant(
+            @RequestParam String matricule
+    );
+//    @PutMapping("/update/jutification")
+//    ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 }

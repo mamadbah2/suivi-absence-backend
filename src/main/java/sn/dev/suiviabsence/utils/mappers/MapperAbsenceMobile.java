@@ -9,11 +9,12 @@ public class MapperAbsenceMobile {
 
     public static AbsenceMobileSimpleResponse toDto(Absence absence) {
         return new AbsenceMobileSimpleResponse(
+                absence.getEtudiant().getNom(),
+                absence.getEtudiant().getPrenom(),
+                absence.getCours().getClasse().getNom(),
                 absence.getCours().getModule().getNom(),
                 absence.getCours().getHeureDebut(),
-                absence.getCours().getHeureFin(),
-                absence.getJustification(),
-                absence.getStatus()
+                absence.getCours().getHeureFin()
         );
     }
 

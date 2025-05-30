@@ -19,7 +19,9 @@ public class RouteChecker {
             "/app/auth/login",
             "/app/auth/logout",
             // ... autres chemins valides
-            "/api/products"
+            "/absences/mobiles/premiers",
+            "/absences/mobiles/rechercher",
+            "/absences/mobiles/pointer"
     );
     @Autowired
     public RouteChecker(RequestMappingHandlerMapping handlerMapping) {
