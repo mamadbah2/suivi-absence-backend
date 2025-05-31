@@ -33,7 +33,9 @@ public class RouteChecker {
             "/api-docs",
             "/api-docs/",
             "/v3/api-docs",
-            "/v3/api-docs/"
+            "/v3/api-docs/",
+            "/app/absences/mobiles/list",
+            "/app/absences/list"
     );
     @Autowired
     public RouteChecker(RequestMappingHandlerMapping handlerMapping) {

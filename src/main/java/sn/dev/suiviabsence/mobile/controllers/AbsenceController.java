@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -65,4 +67,15 @@ public interface AbsenceController {
             @Parameter(description = "Matricule de l'étudiant (ex: ETD001)", required = true)
             @RequestParam String matricule
     );
+
+    @Operation(summary = "Liste de tous les absences")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/list")
+    ResponseEntity<Page<AbsenceMobileSimpleResponse>> getAllAbsences(
+            @Parameter(description = "Numéro de page pour la pagination, par défaut 0")
+            @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Taille de la page pour la pagination, par défaut 10")
+            @RequestParam(defaultValue = "10") int size
+    );
+
 }

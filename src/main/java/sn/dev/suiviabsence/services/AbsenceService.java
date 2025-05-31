@@ -1,6 +1,11 @@
 package sn.dev.suiviabsence.services;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
+import org.springframework.data.domain.Pageable;
+
+import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 
@@ -11,6 +16,7 @@ public interface AbsenceService {
     List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour(String date);
     Optional<PointageEtudiantResponse> rechercherEtudiantPourCours(String matricule);
     ResponseEntity<String> pointerEtudiant(String matricule);
+    Page<Absence> getAllAbsences(Pageable pageable);
 
 
 }

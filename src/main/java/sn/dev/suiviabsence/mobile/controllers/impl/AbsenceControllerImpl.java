@@ -2,17 +2,24 @@ package sn.dev.suiviabsence.mobile.controllers.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springdoc.core.converters.models.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.controllers.AbsenceController;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RestController("mobileAbsenceController")
 @AllArgsConstructor
 @Slf4j
 //@RequestMapping("/absences/mobiles")
@@ -60,6 +67,13 @@ public class AbsenceControllerImpl implements AbsenceController {
     @Override
     public ResponseEntity<String> pointerEtudiant(String matricule) {
         return absenceService.pointerEtudiant(matricule);
+    }
+
+    @Override
+    public ResponseEntity<Page<AbsenceMobileSimpleResponse>> getAllAbsences(int page, int size) {
+        Page<Absence> absences = absenceService.getAllAbsences(PageRequest.of(page, size));
+        Page<AbsenceMobileSimpleResponse> response = absences.map(MapperAbsenceMobile::toDto);
+        return ResponseEntity.ok(response);
     }
 
 //    @Override

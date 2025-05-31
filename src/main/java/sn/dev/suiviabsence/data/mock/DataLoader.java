@@ -45,6 +45,15 @@ public class DataLoader {
         vigile1.setRole(Role.VIGILE);
         userRepository.save(vigile1);
 
+
+        User admin = new User();
+        admin.setNom("Sow");
+        admin.setPrenom("Ibrahim");
+        admin.setEmail("ibrahim.sow@groupeism.sn");
+        admin.setPassword(passwordEncoder.encode("admin1"));
+        admin.setRole(Role.ADMIN);
+        userRepository.save(admin);
+
         User vigile2 = new User();
         vigile2.setNom("Diallo");
         vigile2.setPrenom("Aissatou");
