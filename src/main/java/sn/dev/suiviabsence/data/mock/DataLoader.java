@@ -2,6 +2,7 @@ package sn.dev.suiviabsence.data.mock;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import sn.dev.suiviabsence.data.entities.*;
 import sn.dev.suiviabsence.data.entities.Module;
@@ -10,6 +11,8 @@ import sn.dev.suiviabsence.data.enums.Niveau;
 import sn.dev.suiviabsence.data.enums.Role;
 import sn.dev.suiviabsence.data.enums.Status;
 import sn.dev.suiviabsence.data.repositories.*;
+
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class DataLoader {
     private final AbsenceRepository absenceRepository;
     private final ModuleRepository moduleRepository;
     private final CoursRepository coursRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void init() {
@@ -37,7 +41,7 @@ public class DataLoader {
         vigile1.setNom("Sow");
         vigile1.setPrenom("Ibrahima");
         vigile1.setEmail("ibrahima.sow@groupeism.sn");
-        vigile1.setPassword("vigile1");
+        vigile1.setPassword(passwordEncoder.encode("vigile1"));
         vigile1.setRole(Role.VIGILE);
         userRepository.save(vigile1);
 
@@ -45,7 +49,7 @@ public class DataLoader {
         vigile2.setNom("Diallo");
         vigile2.setPrenom("Aissatou");
         vigile2.setEmail("aissatou.diallo@groupeism.sn");
-        vigile2.setPassword("vigile2");
+        vigile2.setPassword(passwordEncoder.encode("vigile2"));
         vigile2.setRole(Role.VIGILE);
         userRepository.save(vigile2);
 
@@ -86,7 +90,7 @@ public class DataLoader {
         e1.setNom("Fall");
         e1.setPrenom("Aminata");
         e1.setEmail("aminata.fall@ism.edu.sn");
-        e1.setPassword("password1");
+        e1.setPassword(passwordEncoder.encode("password1"));
         e1.setRole(Role.ETUDIANT);
         e1.setMatricule("ETD001");
         e1.setClasse(classe1);
@@ -96,7 +100,7 @@ public class DataLoader {
         e2.setNom("Diop");
         e2.setPrenom("Moussa");
         e2.setEmail("moussa.diop@@ism.edu.sn");
-        e2.setPassword("password2");
+        e2.setPassword(passwordEncoder.encode("password2"));
         e2.setRole(Role.ETUDIANT);
         e2.setMatricule("ETD002");
         e2.setClasse(classe2);
@@ -106,7 +110,7 @@ public class DataLoader {
         e3.setNom("Keita");
         e3.setPrenom("Fatima");
         e3.setEmail("fatima.keita@ism.edu.sn");
-        e3.setPassword("password3");
+        e3.setPassword(passwordEncoder.encode("password3"));
         e3.setRole(Role.ETUDIANT);
         e3.setMatricule("ETD003");
         e3.setClasse(classe3);
@@ -116,7 +120,7 @@ public class DataLoader {
         e4.setNom("Ndiaye");
         e4.setPrenom("Anna");
         e4.setEmail("anna.Ndiaye@ism.edu.sn");
-        e4.setPassword("password4");
+        e4.setPassword(passwordEncoder.encode("password4"));
         e4.setRole(Role.ETUDIANT);
         e4.setMatricule("ETD004");
         e4.setClasse(classe4);
@@ -126,7 +130,7 @@ public class DataLoader {
         e5.setNom("Bah");
         e5.setPrenom("Bobo");
         e5.setEmail("bobo.bah@ism.edu.sn");
-        e5.setPassword("password5");
+        e5.setPassword(passwordEncoder.encode("password5"));
         e5.setRole(Role.ETUDIANT);
         e5.setMatricule("ETD005");
         e5.setClasse(classe5);
@@ -292,5 +296,57 @@ public class DataLoader {
         a2.setEtudiant(e1);
         a2.setCours(cours3);
         absenceRepository.save(a2);
+        
+        // Ajouter des cours pour la date actuelle (31 mai 2025)
+        String today = LocalDate.now().toString(); // "2025-05-31"
+        
+        // Cours d'aujourd'hui pour la classe 1
+        Cours coursAujourdhui1 = new Cours();
+        coursAujourdhui1.setDate(today);
+        coursAujourdhui1.setHeureDebut("08:00");
+        coursAujourdhui1.setHeureFin("12:00");
+        coursAujourdhui1.setModule(module1);
+        coursAujourdhui1.setClasse(classe1);
+        coursRepository.save(coursAujourdhui1);
+        
+        // Cours d'aujourd'hui pour la classe 2
+        Cours coursAujourdhui2 = new Cours();
+        coursAujourdhui2.setDate(today);
+        coursAujourdhui2.setHeureDebut("09:00");
+        coursAujourdhui2.setHeureFin("11:00");
+        coursAujourdhui2.setModule(module2);
+        coursAujourdhui2.setClasse(classe2);
+        coursRepository.save(coursAujourdhui2);
+        
+        // Ajouter des absences pour les cours d'aujourd'hui
+        // Étudiant 1 absent au cours d'aujourd'hui
+        Absence absenceAujourdhui1 = new Absence();
+        absenceAujourdhui1.setDate(today);
+        absenceAujourdhui1.setHeure(coursAujourdhui1.getHeureDebut());
+        absenceAujourdhui1.setStatus(Status.ABSENT);
+        absenceAujourdhui1.setJustification(null);
+        absenceAujourdhui1.setEtudiant(e1);
+        absenceAujourdhui1.setCours(coursAujourdhui1);
+        absenceRepository.save(absenceAujourdhui1);
+        
+        // Étudiant 2 absent au cours d'aujourd'hui
+        Absence absenceAujourdhui2 = new Absence();
+        absenceAujourdhui2.setDate(today);
+        absenceAujourdhui2.setHeure(coursAujourdhui2.getHeureDebut());
+        absenceAujourdhui2.setStatus(Status.ABSENT);
+        absenceAujourdhui2.setJustification(null);
+        absenceAujourdhui2.setEtudiant(e2);
+        absenceAujourdhui2.setCours(coursAujourdhui2);
+        absenceRepository.save(absenceAujourdhui2);
+        
+        // Étudiant 3 absent au cours d'aujourd'hui (ajoutez d'autres étudiants si nécessaire)
+        Absence absenceAujourdhui3 = new Absence();
+        absenceAujourdhui3.setDate(today);
+        absenceAujourdhui3.setHeure(coursAujourdhui1.getHeureDebut());
+        absenceAujourdhui3.setStatus(Status.ABSENT);
+        absenceAujourdhui3.setJustification(null);
+        absenceAujourdhui3.setEtudiant(e3);
+        absenceAujourdhui3.setCours(coursAujourdhui1);
+        absenceRepository.save(absenceAujourdhui3);
     }
 }

@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import sn.dev.suiviabsence.data.entities.Etudiant;
 import sn.dev.suiviabsence.data.entities.User;
 
 import java.util.Date;
@@ -33,6 +34,15 @@ public class JwtUtils {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole().name());
+        claims.put("nom", user.getNom());
+        claims.put("prenom", user.getPrenom());
+        claims.put("email", user.getEmail());
+        
+        // Ajouter le matricule si c'est un étudiant
+        if (user instanceof Etudiant) {
+            claims.put("matricule", ((Etudiant) user).getMatricule());
+        }
+        
         return createToken(claims, user.getEmail());
     }
 
