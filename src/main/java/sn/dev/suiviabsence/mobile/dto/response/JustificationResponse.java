@@ -1,4 +1,4 @@
-package com.suiviabsence.mobile.dto.response;
+package sn.dev.suiviabsence.mobile.dto.response;
 
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -10,5 +10,5 @@ public class JustificationResponse {
     private String fichierUrl;
     private String commentaireEtudiant;
     private String commentaireAdmin;
-    private LocalDateTime creeLe;
+    private LocalDateTime creeLe;
 }

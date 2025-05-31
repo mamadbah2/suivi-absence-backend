@@ -42,7 +42,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/app/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Autoriser les requêtes OPTIONS
-//                        .requestMatchers("/absences/mobiles/**").permitAll()
+                        // Permettre l'accès à la documentation Swagger
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/error").permitAll() // 👈 allow access to error page
                         .requestMatchers("/absences/mobiles/premiers").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")

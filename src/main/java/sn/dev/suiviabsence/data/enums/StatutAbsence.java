@@ -1,4 +1,4 @@
-package com.suivi_absence.entities.enums;
+package sn.dev.suiviabsence.data.enums;
 
 public enum StatutAbsence {
 
@@ -25,6 +25,5 @@ public enum StatutAbsence {
     
     
     public boolean estEnAttente() {
-        return this == JUSTIFIEE_EN_ATTENTE;
-    }
+        return this == JUSTIFIEE_EN_ATTENTE;}
 }

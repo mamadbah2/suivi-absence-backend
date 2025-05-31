@@ -1,7 +1,6 @@
 package sn.dev.suiviabsence.utils.mappers;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;

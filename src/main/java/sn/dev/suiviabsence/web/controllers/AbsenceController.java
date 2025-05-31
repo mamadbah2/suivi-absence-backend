@@ -1,7 +1,6 @@
 package sn.dev.suiviabsence.web.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;

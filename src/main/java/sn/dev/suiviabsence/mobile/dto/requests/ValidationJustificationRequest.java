@@ -1,4 +1,4 @@
-package com.suiviabsence.mobile.dto.requests;
+package sn.dev.suiviabsence.mobile.dto.requests;
 
 import lombok.Data;
 

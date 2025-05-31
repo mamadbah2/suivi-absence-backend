@@ -10,7 +10,6 @@ import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

@@ -18,10 +18,22 @@ public class RouteChecker {
     private static final List<String> validPaths = List.of(
             "/app/auth/login",
             "/app/auth/logout",
-            // ... autres chemins valides
+            // Anciens chemins (à conserver pour compatibilité)
             "/absences/mobiles/premiers",
             "/absences/mobiles/rechercher",
-            "/absences/mobiles/pointer"
+            "/absences/mobiles/pointer",
+            // Nouveaux chemins avec préfixe /app
+            "/app/absences/mobiles/premiers",
+            "/app/absences/mobiles/rechercher",
+            "/app/absences/mobiles/pointer",
+            // Routes Swagger
+            "/swagger-ui",
+            "/swagger-ui/",
+            "/swagger-ui/index.html",
+            "/api-docs",
+            "/api-docs/",
+            "/v3/api-docs",
+            "/v3/api-docs/"
     );
     @Autowired
     public RouteChecker(RequestMappingHandlerMapping handlerMapping) {
