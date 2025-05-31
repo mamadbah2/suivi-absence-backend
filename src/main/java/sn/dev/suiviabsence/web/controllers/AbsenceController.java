@@ -26,4 +26,7 @@ public interface AbsenceController {
 
     @PutMapping("/update/jutification")
     ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
+
+    @PostMapping("/valider-justification")
+    ResponseEntity<Map<String, Object>> validerJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 }

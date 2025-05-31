@@ -22,4 +22,12 @@ public class Absence {
      Etudiant etudiant;
      Cours cours;
      Status status;
+     public void setStatus(Status nouveauStatut) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
+     }
+     public void setStatus(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
+     }
 }
