@@ -42,14 +42,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/app/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Autoriser les requêtes OPTIONS
-//                        .requestMatchers("/absences/mobiles/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**").permitAll()
                         .requestMatchers("/error").permitAll() // 👈 allow access to error page
                         .requestMatchers("/absences/mobiles/premiers").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/pointer").hasRole("VIGILE")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                // .addFilterBefore(unknownURI, jwtAuthFilter.getClass())
+                 .addFilterAfter(unknownURI, jwtAuthFilter.getClass())
                 .build();
     }
 
