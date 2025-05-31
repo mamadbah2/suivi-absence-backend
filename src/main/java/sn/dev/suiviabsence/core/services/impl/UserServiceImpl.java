@@ -1,5 +1,7 @@
 package sn.dev.suiviabsence.core.services.impl;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sn.dev.suiviabsence.core.domain.User;
@@ -29,5 +31,18 @@ public class UserServiceImpl implements UserService {
   public User createUser(User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return userRepository.save(user);
+  }
+
+  @Override
+  public User getCurrentUser() {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String email;
+    if (principal instanceof UserDetails) {
+      email = ((UserDetails) principal).getUsername();
+    } else {
+      email = principal.toString();
+    }
+    return userRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'email : " + email));
   }
 }
