@@ -6,4 +6,6 @@ public interface UserService {
   User getCurrentUser();
 
   User authenticate(String email, String password);
+
+  User createUser(User user);
 }

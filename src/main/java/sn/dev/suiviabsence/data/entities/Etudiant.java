@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "etudiants")
 public class Etudiant {
-    @Id
-    private String id;
-    private String nom;
-    private String prenom;
-    private String classe;
-} 
+  @Id
+  private String id;
+  private String nom;
+  private String prenom;
+  private String classe;
+}

@@ -2,62 +2,46 @@ package sn.dev.suiviabsence.core.service.impl;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import sn.dev.suiviabsence.core.domain.User;
-import sn.dev.suiviabsence.infrastructure.persistence.UserRepository;
-import sn.dev.suiviabsence.core.service.UserService;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import sn.dev.suiviabsence.core.domain.User;
+import sn.dev.suiviabsence.core.service.UserService;
+import sn.dev.suiviabsence.infrastructure.persistence.UserRepository;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
-  @Override
-  public User getCurrentUser() {
-    var authentication = SecurityContextHolder.getContext().getAuthentication();
-
-    if (authentication == null) {
-      log.warn("Tentative d'accès sans authentification");
-      return null;
-    }
-
-    if (!authentication.isAuthenticated()) {
-      log.warn("Utilisateur non authentifié");
-      return null;
-    }
-
-    Object principal = authentication.getPrincipal();
-    if (principal instanceof UserDetails) {
-      String email = ((UserDetails) principal).getUsername();
-      log.info("Récupération de l'utilisateur avec l'email: {}", email);
-
-      return userRepository.findByEmail(email)
-          .orElseGet(() -> {
-            log.error("Utilisateur {} non trouvé dans la base", email);
-            return null;
-          });
-    }
-
-    log.warn("Principal n'est pas une instance de UserDetails");
-    return null;
+  public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
   public User authenticate(String email, String password) {
-    log.info("Tentative d'authentification pour l'email: {}", email);
-
     return userRepository.findByEmail(email)
         .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-        .orElseThrow(() -> {
-          log.error("Échec d'authentification pour l'email: {}", email);
-          return new BadCredentialsException("Email ou mot de passe incorrect");
-        });
+        .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+  }
+
+  @Override
+  public User createUser(User user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    return userRepository.save(user);
+  }
+
+  @Override
+  public User getCurrentUser() {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    String email;
+    if (principal instanceof UserDetails) {
+      email = ((UserDetails) principal).getUsername();
+    } else {
+      email = principal.toString();
+    }
+    return userRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'email : " + email));
   }
 }
