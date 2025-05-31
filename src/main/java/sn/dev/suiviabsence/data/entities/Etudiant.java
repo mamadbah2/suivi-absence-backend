@@ -1,21 +1,21 @@
 package sn.dev.suiviabsence.data.entities;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-@Document
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Etudiant extends User {
-    String matricule;
-    List<Absence> absences;
-    Classe classe;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "etudiants")
+public class Etudiant {
+  @Id
+  private String id;
+  private String nom;
+  private String prenom;
+  private String classe;
 }

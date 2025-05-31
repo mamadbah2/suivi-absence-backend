@@ -1,16 +1,21 @@
 package sn.dev.suiviabsence.data.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import sn.dev.suiviabsence.data.enums.Role;
 
-    @Document
-    @Data
-    public class User {
-        String id;
-        String nom;
-        String prenom;
-        String email;
-        String password;
-        Role role;
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "users")
+public class User {
+  @Id
+  private String id;
+  private String nom;
+  private String prenom;
+  private String email;
+  private String password;
+  private String role;
+}

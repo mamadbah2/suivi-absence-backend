@@ -1,20 +1,19 @@
 package sn.dev.suiviabsence.data.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
-@Document
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "cours")
 public class Cours {
-    String id;
-    String heureDebut;
-    String heureFin;
-    String date;
-    Module module;
-    List<Absence> absences;
-    Classe classe;
+  @Id
+  private String id;
+  private String module;
 }
