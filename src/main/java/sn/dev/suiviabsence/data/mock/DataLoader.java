@@ -197,6 +197,57 @@ public class DataLoader {
         e10.setMatricule("ETD010");
         e10.setClasse(classe4);
         etudiantRepository.save(e10);
+        
+        // Ajout de nouveaux étudiants
+        Etudiant e11 = new Etudiant();
+        e11.setNom("Diallo");
+        e11.setPrenom("Ramatoulaye");
+        e11.setEmail("ramatoulaye.diallo@ism.edu.sn");
+        e11.setPassword(passwordEncoder.encode("password11"));
+        e11.setRole(Role.ETUDIANT);
+        e11.setMatricule("ETD011");
+        e11.setClasse(classe1);
+        etudiantRepository.save(e11);
+        
+        Etudiant e12 = new Etudiant();
+        e12.setNom("Sene");
+        e12.setPrenom("Moustapha");
+        e12.setEmail("moustapha.sene@ism.edu.sn");
+        e12.setPassword(passwordEncoder.encode("password12"));
+        e12.setRole(Role.ETUDIANT);
+        e12.setMatricule("ETD012");
+        e12.setClasse(classe2);
+        etudiantRepository.save(e12);
+        
+        Etudiant e13 = new Etudiant();
+        e13.setNom("Wade");
+        e13.setPrenom("Coumba");
+        e13.setEmail("coumba.wade@ism.edu.sn");
+        e13.setPassword(passwordEncoder.encode("password13"));
+        e13.setRole(Role.ETUDIANT);
+        e13.setMatricule("ETD013");
+        e13.setClasse(classe3);
+        etudiantRepository.save(e13);
+        
+        Etudiant e14 = new Etudiant();
+        e14.setNom("Thiam");
+        e14.setPrenom("Seydina");
+        e14.setEmail("seydina.thiam@ism.edu.sn");
+        e14.setPassword(passwordEncoder.encode("password14"));
+        e14.setRole(Role.ETUDIANT);
+        e14.setMatricule("ETD014");
+        e14.setClasse(classe4);
+        etudiantRepository.save(e14);
+        
+        Etudiant e15 = new Etudiant();
+        e15.setNom("Niang");
+        e15.setPrenom("Fatou");
+        e15.setEmail("fatou.niang@ism.edu.sn");
+        e15.setPassword(passwordEncoder.encode("password15"));
+        e15.setRole(Role.ETUDIANT);
+        e15.setMatricule("ETD015");
+        e15.setClasse(classe5);
+        etudiantRepository.save(e15);
 
         // Module
         Module module1 = new Module();
@@ -258,10 +309,29 @@ public class DataLoader {
         module10.setNomProf("Mr Kara Samb");
         module10.setClasse(classe5);
         moduleRepository.save(module10);
+        
+        // Nouveaux modules
+        Module module11 = new Module();
+        module11.setNom("Java Avancé");
+        module11.setNomProf("Mme Dieng");
+        module11.setClasse(classe1);
+        moduleRepository.save(module11);
+        
+        Module module12 = new Module();
+        module12.setNom("Sécurité Informatique");
+        module12.setNomProf("Mr Diagne");
+        module12.setClasse(classe2);
+        moduleRepository.save(module12);
+        
+        Module module13 = new Module();
+        module13.setNom("Réseaux et Protocoles");
+        module13.setNomProf("Mme Touré");
+        module13.setClasse(classe3);
+        moduleRepository.save(module13);
 
         // Cours
         Cours cours1 = new Cours();
-        cours1.setDate("2024-05-25");
+        cours1.setDate(LocalDate.now().toString());
         cours1.setHeureDebut("08:00");
         cours1.setHeureFin("12:00");
         cours1.setModule(module1);
@@ -269,7 +339,7 @@ public class DataLoader {
         coursRepository.save(cours1);
 
         Cours cours2 = new Cours();
-        cours2.setDate("2025-06-01");
+        cours2.setDate(LocalDate.now().toString());
         cours2.setHeureDebut("08:00");
         cours2.setHeureFin("10:00");
         cours2.setModule(module2);
@@ -277,7 +347,7 @@ public class DataLoader {
         coursRepository.save(cours2);
 
         Cours cours3 = new Cours();
-        cours3.setDate("2024-05-27");
+        cours3.setDate(LocalDate.now().toString());
         cours3.setHeureDebut("10:00");
         cours3.setHeureFin("13:00");
         cours3.setModule(module3);
@@ -285,7 +355,7 @@ public class DataLoader {
         coursRepository.save(cours3);
 
         Cours cours4 = new Cours();
-        cours4.setDate("2024-06-01");
+        cours4.setDate(LocalDate.now().toString());
         cours4.setHeureDebut("08:00");
         cours4.setHeureFin("11:00");
         cours4.setModule(module4);
@@ -293,7 +363,7 @@ public class DataLoader {
         coursRepository.save(cours4);
 
         Cours cours5 = new Cours();
-        cours5.setDate("2024-06-03");
+        cours5.setDate(LocalDate.now().toString());
         cours5.setHeureDebut("13:00");
         cours5.setHeureFin("17:00");
         cours5.setModule(module5);
@@ -301,7 +371,7 @@ public class DataLoader {
         coursRepository.save(cours5);
 
         Cours cours6 = new Cours();
-        cours6.setDate("2024-06-05");
+        cours6.setDate(LocalDate.now().toString());
         cours6.setHeureDebut("15:00");
         cours6.setHeureFin("17:00");
         cours6.setModule(module6);
@@ -309,7 +379,7 @@ public class DataLoader {
         coursRepository.save(cours6);
 
         Cours cours7 = new Cours();
-        cours7.setDate("2024-06-07");
+        cours7.setDate(LocalDate.now().toString());
         cours7.setHeureDebut("09:00");
         cours7.setHeureFin("11:00");
         cours7.setModule(module7);
@@ -317,7 +387,7 @@ public class DataLoader {
         coursRepository.save(cours7);
 
         Cours cours8 = new Cours();
-        cours8.setDate("2024-06-06");
+        cours8.setDate(LocalDate.now().toString());
         cours8.setHeureDebut("08:00");
         cours8.setHeureFin("12:00");
         cours8.setModule(module8);
@@ -325,7 +395,7 @@ public class DataLoader {
         coursRepository.save(cours8);
 
         Cours cours9 = new Cours();
-        cours9.setDate("2024-06-10");
+        cours9.setDate(LocalDate.now().toString());
         cours9.setHeureDebut("09:00");
         cours9.setHeureFin("11:00");
         cours9.setModule(module9);
@@ -333,7 +403,7 @@ public class DataLoader {
         coursRepository.save(cours9);
 
         Cours cours10 = new Cours();
-        cours10.setDate("2024-06-25");
+        cours10.setDate(LocalDate.now().toString());
         cours10.setHeureDebut("15:00");
         cours10.setHeureFin("18:00");
         cours10.setModule(module10);
@@ -342,7 +412,7 @@ public class DataLoader {
 
         // Absences
         Absence a1 = new Absence();
-        a1.setDate("2025-06-01");
+        a1.setDate(LocalDate.now().toString());
         a1.setHeure("08:40");
         a1.setStatus(Status.ABSENT);
         a1.setJustification("Retard de transport");
@@ -351,7 +421,7 @@ public class DataLoader {
         absenceRepository.save(a1);
 
         Absence a2 = new Absence();
-        a2.setDate("2024-05-27");
+        a2.setDate(LocalDate.now().toString());
         a2.setHeure("13:00");
         a2.setStatus(Status.RETARD);
         a2.setJustification(null);
@@ -360,7 +430,7 @@ public class DataLoader {
         absenceRepository.save(a2);
         
         // Ajouter des cours pour la date actuelle (1 juin 2025)
-        String today = "2025-06-01"; // Date fixe pour les tests
+        String today = LocalDate.now().toString(); // Date fixe pour les tests
         LocalDate todayDate = LocalDate.parse(today);
         
         // Cours pour aujourd'hui (2025-06-01)
@@ -395,6 +465,39 @@ public class DataLoader {
         coursToday4.setModule(module7);
         coursToday4.setClasse(classe4);
         coursRepository.save(coursToday4);
+        
+        // Nouveaux cours pour aujourd'hui
+        Cours coursToday5 = new Cours();
+        coursToday5.setDate(today);
+        coursToday5.setHeureDebut("10:00");
+        coursToday5.setHeureFin("12:30");
+        coursToday5.setModule(module11);
+        coursToday5.setClasse(classe1);
+        coursRepository.save(coursToday5);
+        
+        Cours coursToday6 = new Cours();
+        coursToday6.setDate(today);
+        coursToday6.setHeureDebut("14:00");
+        coursToday6.setHeureFin("16:00");
+        coursToday6.setModule(module12);
+        coursToday6.setClasse(classe2);
+        coursRepository.save(coursToday6);
+        
+        Cours coursToday7 = new Cours();
+        coursToday7.setDate(today);
+        coursToday7.setHeureDebut("16:00");
+        coursToday7.setHeureFin("18:30");
+        coursToday7.setModule(module13);
+        coursToday7.setClasse(classe3);
+        coursRepository.save(coursToday7);
+        
+        Cours coursToday8 = new Cours();
+        coursToday8.setDate(today);
+        coursToday8.setHeureDebut("08:30");
+        coursToday8.setHeureFin("11:30");
+        coursToday8.setModule(module9);
+        coursToday8.setClasse(classe5);
+        coursRepository.save(coursToday8);
         
         // Ajouter des absences avec les statuts PRESENT, RETARD et ABSENT pour aujourd'hui
         
@@ -513,5 +616,119 @@ public class DataLoader {
         absenceToday11.setEtudiant(e5);
         absenceToday11.setCours(coursToday2);
         absenceRepository.save(absenceToday11);
+        
+        // Nouvelles absences pour aujourd'hui
+        
+        // Étudiant 11 - PRESENT
+        Absence absenceToday12 = new Absence();
+        absenceToday12.setDate(today);
+        absenceToday12.setHeure(LocalTime.of(7, 45).format(timeFormatter));
+        absenceToday12.setStatus(Status.PRESENT);
+        absenceToday12.setJustification(null);
+        absenceToday12.setEtudiant(e11);
+        absenceToday12.setCours(coursToday1);
+        absenceRepository.save(absenceToday12);
+        
+        // Étudiant 11 - PRESENT (second cours)
+        Absence absenceToday13 = new Absence();
+        absenceToday13.setDate(today);
+        absenceToday13.setHeure(LocalTime.of(10, 0).format(timeFormatter));
+        absenceToday13.setStatus(Status.PRESENT);
+        absenceToday13.setJustification(null);
+        absenceToday13.setEtudiant(e11);
+        absenceToday13.setCours(coursToday5);
+        absenceRepository.save(absenceToday13);
+        
+        // Étudiant 12 - RETARD
+        Absence absenceToday14 = new Absence();
+        absenceToday14.setDate(today);
+        absenceToday14.setHeure(LocalTime.of(9, 20).format(timeFormatter));
+        absenceToday14.setStatus(Status.RETARD);
+        absenceToday14.setJustification("Rendez-vous médical");
+        absenceToday14.setEtudiant(e12);
+        absenceToday14.setCours(coursToday2);
+        absenceRepository.save(absenceToday14);
+        
+        // Étudiant 12 - PRESENT (second cours)
+        Absence absenceToday15 = new Absence();
+        absenceToday15.setDate(today);
+        absenceToday15.setHeure(LocalTime.of(14, 0).format(timeFormatter));
+        absenceToday15.setStatus(Status.PRESENT);
+        absenceToday15.setJustification(null);
+        absenceToday15.setEtudiant(e12);
+        absenceToday15.setCours(coursToday6);
+        absenceRepository.save(absenceToday15);
+        
+        // Étudiant 13 - PRESENT
+        Absence absenceToday16 = new Absence();
+        absenceToday16.setDate(today);
+        absenceToday16.setHeure(LocalTime.of(12, 55).format(timeFormatter));
+        absenceToday16.setStatus(Status.PRESENT);
+        absenceToday16.setJustification(null);
+        absenceToday16.setEtudiant(e13);
+        absenceToday16.setCours(coursToday3);
+        absenceRepository.save(absenceToday16);
+        
+        // Étudiant 13 - RETARD (second cours)
+        Absence absenceToday17 = new Absence();
+        absenceToday17.setDate(today);
+        absenceToday17.setHeure(LocalTime.of(16, 15).format(timeFormatter));
+        absenceToday17.setStatus(Status.RETARD);
+        absenceToday17.setJustification("Transport en commun");
+        absenceToday17.setEtudiant(e13);
+        absenceToday17.setCours(coursToday7);
+        absenceRepository.save(absenceToday17);
+        
+        // Étudiant 14 - ABSENT
+        Absence absenceToday18 = new Absence();
+        absenceToday18.setDate(today);
+        absenceToday18.setHeure(coursToday4.getHeureDebut());
+        absenceToday18.setStatus(Status.ABSENT);
+        absenceToday18.setJustification("Maladie");
+        absenceToday18.setEtudiant(e14);
+        absenceToday18.setCours(coursToday4);
+        absenceRepository.save(absenceToday18);
+        
+        // Étudiant 15 - PRESENT
+        Absence absenceToday19 = new Absence();
+        absenceToday19.setDate(today);
+        absenceToday19.setHeure(LocalTime.of(8, 25).format(timeFormatter));
+        absenceToday19.setStatus(Status.PRESENT);
+        absenceToday19.setJustification(null);
+        absenceToday19.setEtudiant(e15);
+        absenceToday19.setCours(coursToday8);
+        absenceRepository.save(absenceToday19);
+        
+        // Des pointages très récents pour aujourd'hui (que l'API premiers devrait renvoyer)
+        
+        // Étudiant 1 - PRESENT pour son deuxième cours
+        Absence absenceToday20 = new Absence();
+        absenceToday20.setDate(today);
+        absenceToday20.setHeure(LocalTime.of(10, 5).format(timeFormatter));
+        absenceToday20.setStatus(Status.PRESENT);
+        absenceToday20.setJustification(null);
+        absenceToday20.setEtudiant(e1);
+        absenceToday20.setCours(coursToday5);
+        absenceRepository.save(absenceToday20);
+        
+        // Étudiant 2 - RETARD pour son deuxième cours
+        Absence absenceToday21 = new Absence();
+        absenceToday21.setDate(today);
+        absenceToday21.setHeure(LocalTime.of(14, 10).format(timeFormatter));
+        absenceToday21.setStatus(Status.RETARD);
+        absenceToday21.setJustification("Problème de transport");
+        absenceToday21.setEtudiant(e2);
+        absenceToday21.setCours(coursToday6);
+        absenceRepository.save(absenceToday21);
+        
+        // Étudiant 3 - PRESENT pour son deuxième cours
+        Absence absenceToday22 = new Absence();
+        absenceToday22.setDate(today);
+        absenceToday22.setHeure(LocalTime.of(16, 0).format(timeFormatter));
+        absenceToday22.setStatus(Status.PRESENT);
+        absenceToday22.setJustification(null);
+        absenceToday22.setEtudiant(e3);
+        absenceToday22.setCours(coursToday7);
+        absenceRepository.save(absenceToday22);
     }
 }
