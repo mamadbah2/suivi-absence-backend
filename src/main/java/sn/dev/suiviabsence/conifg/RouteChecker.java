@@ -19,7 +19,12 @@ public class RouteChecker {
     private static final List<String> validPaths = List.of(
             "/app/auth/login",
             "/app/auth/logout",
-            // Anciens chemins (à conserver pour compatibilité)
+            "/swagger-ui",        // ✅ Sans extension
+            "/swagger-resources",
+            "/webjars",
+            "/v3/api-docs",      // ✅ Sans /**
+            "/error",
+            // ... autres chemins valides
             "/absences/mobiles/premiers",
             "/absences/mobiles/rechercher",
             "/absences/mobiles/pointer",

@@ -42,8 +42,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/app/auth/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Autoriser les requêtes OPTIONS
-                        // Permettre l'accès à la documentation Swagger
-                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**").permitAll()
                         .requestMatchers("/error").permitAll() // 👈 allow access to error page
                         .requestMatchers("/absences/mobiles/premiers").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")
@@ -52,7 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/app/absences/list").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                // .addFilterBefore(unknownURI, jwtAuthFilter.getClass())
+                 .addFilterAfter(unknownURI, jwtAuthFilter.getClass())
                 .build();
     }
 

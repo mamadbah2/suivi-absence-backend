@@ -1,5 +1,11 @@
 package sn.dev.suiviabsence.mobile.controllers.impl;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +21,7 @@ import sn.dev.suiviabsence.security.JwtUtils;
 import sn.dev.suiviabsence.services.UserService;
 
 @RestController
+@Tag(name = "Authentification", description = "Gestion de l'authentification des utilisateurs")
 public class AuthControllerImpl implements AuthController {
 
     private final UserService userService;
@@ -28,6 +35,29 @@ public class AuthControllerImpl implements AuthController {
     }
 
     @Override
+    @Operation(
+            summary = "Connexion utilisateur",
+            description = "Authentifie un utilisateur (étudiant ou vigile) et retourne un token JWT avec les informations utilisateur"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Connexion réussie",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = UserLoginResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Email incorrect ou mot de passe incorrect",
+                    content = @Content(schema = @Schema(implementation = String.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Données de requête invalides"
+            )
+    })
     public ResponseEntity<UserLoginResponse> login(UserLoginRequest request) {
         System.out.println("\n*****************START login");
         User checkUser = userService.getByEmail(request.getEmail());
@@ -41,28 +71,28 @@ public class AuthControllerImpl implements AuthController {
 
         if (passwordEncoder.matches(request.getPassword(), checkUser.getPassword())) {
             String token = jwtUtils.generateToken(checkUser);
-            
+
             UserLoginResponse response;
-            
+
             // Si c'est un étudiant, inclure le matricule
             if (checkUser instanceof Etudiant) {
                 Etudiant etudiant = (Etudiant) checkUser;
                 response = new UserLoginResponse(
-                    token,
-                    checkUser.getEmail(),
-                    checkUser.getNom(),
-                    checkUser.getPrenom(),
-                    checkUser.getRole(),
-                    etudiant.getMatricule()
+                        token,
+                        checkUser.getEmail(),
+                        checkUser.getNom(),
+                        checkUser.getPrenom(),
+                        checkUser.getRole(),
+                        etudiant.getMatricule()
                 );
             } else {
                 // Pour les autres types d'utilisateurs (comme VIGILE)
                 response = new UserLoginResponse(
-                    token,
-                    checkUser.getEmail(),
-                    checkUser.getNom(),
-                    checkUser.getPrenom(),
-                    checkUser.getRole()
+                        token,
+                        checkUser.getEmail(),
+                        checkUser.getNom(),
+                        checkUser.getPrenom(),
+                        checkUser.getRole()
                 );
             }
 
