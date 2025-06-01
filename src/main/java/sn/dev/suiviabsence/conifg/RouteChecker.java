@@ -35,12 +35,17 @@ public class RouteChecker {
             "/app/absences/mobiles/etudiant/**",
             // Routes Swagger
             "/swagger-ui",
-            "/swagger-ui/",
-            "/swagger-ui/index.html",
-            "/api-docs",
-            "/api-docs/",
-            "/v3/api-docs",
-            "/v3/api-docs/",
+        "/swagger-ui/",
+        "/swagger-ui.html",
+        "/swagger-ui/index.html",
+        "/swagger-resources",
+        "/swagger-resources/",
+        "/swagger-resources/**",
+        "/v3/api-docs",
+        "/v3/api-docs/",
+        "/v3/api-docs/**",
+        "/webjars",
+        "/webjars/**",
             "/app/absences/mobiles/list",
             "/app/absences/list"
     );
