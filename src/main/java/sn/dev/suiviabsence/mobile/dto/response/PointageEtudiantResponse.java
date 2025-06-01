@@ -2,6 +2,7 @@ package sn.dev.suiviabsence.mobile.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import sn.dev.suiviabsence.data.enums.Status;
 
 @Data
 @Schema(description = "Informations de l'étudiant pour le pointage")
@@ -18,4 +19,6 @@ public class PointageEtudiantResponse {
     private String heureDebut;
     @Schema(description = "Heure de fin du cours", example = "10:00")
     private String heureFin;
+    @Schema(description = "Statut de présence", example = "PRESENT")
+    private Status status;
 }

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sn.dev.suiviabsence.data.enums.Status;
 
 @AllArgsConstructor
 @Data
@@ -22,4 +23,6 @@ public class AbsenceMobileSimpleResponse {
     String heureDebut;
     @Schema(description = "Heure de fin du cours", example = "12:00")
     String heureFin;
+    @Schema(description = "Statut de présence", example = "PRESENT")
+    Status status;
 }

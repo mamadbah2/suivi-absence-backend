@@ -25,6 +25,7 @@ import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
 @Service
@@ -38,34 +39,24 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     @Override
     public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour() {
         // Si date non fournie, utiliser la date du jour
+        String dateAujourdhui = LocalDate.now().toString();
 
         // Récupérer toutes les absences pour la date donnée
         List<Absence> toutesLesAbsences = absenceRepository.findAll().stream()
-                .filter(absence -> absence.getDate().equals(LocalDate.now().toString()))
+                .filter(absence -> absence.getDate().equals(dateAujourdhui))
                 .collect(Collectors.toList());
 
         // Filtrer les absences où l'étudiant a pointé (PRESENT ou RETARD)
         List<Absence> absencesPointees = toutesLesAbsences.stream()
                 .filter(absence -> absence.getStatus() == Status.PRESENT || absence.getStatus() == Status.RETARD)
                 .sorted(Comparator.comparing(Absence::getHeure).reversed()) // Tri par heure de pointage décroissant (le plus récent d'abord)
-                .limit(10) // Limiter aux 10 derniers pointages
+                .limit(5) // Limiter aux 5 derniers pointages
                 .collect(Collectors.toList());
 
-        // Convertir les absences en DTO de réponse
-        List<AbsenceMobileSimpleResponse> resultat = new ArrayList<>();
-
-        for (Absence absence : absencesPointees) {
-            AbsenceMobileSimpleResponse dto = new AbsenceMobileSimpleResponse();
-            dto.setNom(absence.getEtudiant().getNom());
-            dto.setPrenom(absence.getEtudiant().getPrenom());
-            dto.setClasse(absence.getCours().getClasse().getNom());
-            dto.setModule(absence.getCours().getModule().getNom());
-            dto.setHeureDebut(absence.getCours().getHeureDebut());
-            dto.setHeureFin(absence.getCours().getHeureFin());
-            resultat.add(dto);
-        }
-
-        return resultat;
+        // Utiliser le mapper pour convertir les absences en DTO
+        return absencesPointees.stream()
+                .map(MapperAbsenceMobile::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -94,6 +85,7 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         dto.setCoursNom(absence.getCours().getModule().getNom());
         dto.setHeureDebut(absence.getCours().getHeureDebut());
         dto.setHeureFin(absence.getCours().getHeureFin());
+        dto.setStatus(absence.getStatus());
 
         return Optional.of(dto);
     }

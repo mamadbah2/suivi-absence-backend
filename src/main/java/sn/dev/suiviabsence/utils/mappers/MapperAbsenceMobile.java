@@ -14,7 +14,8 @@ public class MapperAbsenceMobile {
                 absence.getCours().getClasse().getNom(),
                 absence.getCours().getModule().getNom(),
                 absence.getCours().getHeureDebut(),
-                absence.getCours().getHeureFin()
+                absence.getCours().getHeureFin(),
+                absence.getStatus()
         );
     }
 

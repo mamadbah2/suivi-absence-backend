@@ -20,6 +20,7 @@ import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,13 +71,18 @@ public class AbsenceServiceImpl implements AbsenceService {
         if (etudiantOpt.isEmpty()) return Optional.empty();
 
         Etudiant etudiant = etudiantOpt.get();
+        String dateAujourdhui = LocalDate.now().toString();
 
-        // Récupérer les absences de l'étudiant pour la date donnée
-        List<Absence> absences = absenceRepository.findByEtudiantId(etudiant.getId());
+        // Récupérer les absences de l'étudiant pour la date du jour
+        List<Absence> absences = absenceRepository.findByEtudiantId(etudiant.getId())
+                .stream()
+                .filter(absence -> absence.getDate().equals(dateAujourdhui))
+                .toList();
 
         if (absences.isEmpty()) return Optional.empty();
 
-        Absence absence = absences.get(0); // On suppose 1 seul cours ce jour
+        // Prendre la première absence du jour
+        Absence absence = absences.get(0);
 
         PointageEtudiantResponse dto = new PointageEtudiantResponse();
         dto.setMatricule(etudiant.getMatricule());
@@ -85,6 +91,7 @@ public class AbsenceServiceImpl implements AbsenceService {
         dto.setCoursNom(absence.getCours().getModule().getNom());
         dto.setHeureDebut(absence.getCours().getHeureDebut());
         dto.setHeureFin(absence.getCours().getHeureFin());
+        dto.setStatus(absence.getStatus()); // Ajout du statut dans la réponse
 
         return Optional.of(dto);
     }
