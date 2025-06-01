@@ -17,6 +17,11 @@ import java.util.Map;
 @RequestMapping("/app/absences")
 public interface AbsenceController {
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/validate")
+    ResponseEntity<Map<String, Object>>validerJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
+
+
     @Operation(summary = "Liste de tous les absences")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
@@ -29,12 +34,12 @@ public interface AbsenceController {
     @GetMapping("/filtre/{presence}/{classe}")
     ResponseEntity<Absence> filterAbsence(@PathVariable String presence, String classe);
 
-    @PostMapping("/validate")
-    ResponseEntity<Map<String, Object>>validateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
     @GetMapping("/absent/{classe}")
     ResponseEntity<List<Absence>> getAbsenceByClasse(@PathVariable String classe);
 
     @PutMapping("/update/jutification")
     ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
+
+
 }

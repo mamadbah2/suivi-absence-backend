@@ -2,10 +2,7 @@ package sn.dev.suiviabsence.services.impl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Primary;
@@ -24,6 +21,7 @@ import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
 @Service
 @Primary
@@ -146,6 +144,31 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         }
 
         return ResponseEntity.ok("Statut de " + etudiant.getPrenom() + " " + etudiant.getNom() + " mis à jour.");
+    }
+
+    @Override
+    public Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> response = new HashMap<>();
+        if (absenceRequestDto.getId() == null) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        Optional<Absence> optionalAbsence = absenceRepository.findById(String.valueOf(absenceRequestDto.getId()));
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        Absence absence = optionalAbsence.get();
+        // Mettre à jour le statut de la justification
+        absence.setStatus("JUSTIFIE"); // ou autre valeur selon votre logique métier
+        absenceRepository.save(absence);
+
+        response.put("success", true);
+        response.put("message", "Justification validée avec succès.");
+        response.put("absence", absence);
+        return response;
     }
 
     @Override

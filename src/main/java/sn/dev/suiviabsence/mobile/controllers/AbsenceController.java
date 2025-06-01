@@ -31,7 +31,7 @@ public interface AbsenceController {
         @ApiResponse(responseCode = "403", description = "Accès refusé - Rôle VIGILE requis"),
         @ApiResponse(responseCode = "401", description = "Non autorisé - Token JWT manquant ou invalide")
     })
-    @PreAuthorize("hasRole('VIGILE')")
+    // @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/premiers")
     ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers(
             @Parameter(description = "Date au format YYYY-MM-DD, si non fourni la date du jour sera utilisée") 
@@ -46,7 +46,7 @@ public interface AbsenceController {
         @ApiResponse(responseCode = "403", description = "Accès refusé - Rôle VIGILE requis"),
         @ApiResponse(responseCode = "401", description = "Non autorisé - Token JWT manquant ou invalide")
     })
-    @PreAuthorize("hasRole('VIGILE')")
+    // @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/rechercher")
     ResponseEntity<PointageEtudiantResponse> rechercherEtudiantPourCours(
             @Parameter(description = "Matricule de l'étudiant (ex: ETD001)", required = true)
@@ -61,7 +61,7 @@ public interface AbsenceController {
         @ApiResponse(responseCode = "403", description = "Accès refusé - Rôle VIGILE requis"),
         @ApiResponse(responseCode = "401", description = "Non autorisé - Token JWT manquant ou invalide")
     })
-    @PreAuthorize("hasRole('VIGILE')")
+    // @PreAuthorize("hasRole('VIGILE')")
     @PostMapping("/pointer")
     ResponseEntity<String> pointerEtudiant(
             @Parameter(description = "Matricule de l'étudiant (ex: ETD001)", required = true)
@@ -69,7 +69,7 @@ public interface AbsenceController {
     );
 
     @Operation(summary = "Liste de tous les absences")
-    @PreAuthorize("hasRole('VIGILE')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     ResponseEntity<Page<AbsenceMobileSimpleResponse>> getAllAbsences(
             @Parameter(description = "Numéro de page pour la pagination, par défaut 0")

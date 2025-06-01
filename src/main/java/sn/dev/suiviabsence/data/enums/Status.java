@@ -3,5 +3,6 @@ package sn.dev.suiviabsence.data.enums;
 public enum Status {
     ABSENT,
     RETARD,
-    PRESENT
+    PRESENT,
+    JUSTIFIE
 }

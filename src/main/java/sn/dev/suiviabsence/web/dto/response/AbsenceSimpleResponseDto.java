@@ -10,6 +10,7 @@ import sn.dev.suiviabsence.data.enums.Status;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AbsenceSimpleResponseDto {
+    private String id;
     private String matricule;
     private String nom;
     private String prenom;
@@ -21,6 +22,7 @@ public class AbsenceSimpleResponseDto {
     private Status status;
 
     public void AbsenceResponse(Absence absence) {
+        this.id = absence.getId();
         this.matricule = absence.getEtudiant().getMatricule();
         this.nom = absence.getEtudiant().getNom();
         this.prenom = absence.getEtudiant().getPrenom();

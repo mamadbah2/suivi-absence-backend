@@ -1,6 +1,7 @@
 package sn.dev.suiviabsence.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +18,13 @@ import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,7 +33,9 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     private final EtudiantRepository etudiantRepository;
     private final CoursRepository coursRepository;
-    private final AbsenceRepository absenceRepository;
+
+    @Autowired
+    private AbsenceRepository absenceRepository;
 
 
     @Override
@@ -115,10 +121,36 @@ public class AbsenceServiceImpl implements AbsenceService {
             nouveauStatut = Status.ABSENT;
         }
 
-        absence.setStatus(nouveauStatut);
+        absence.setStatus(nouveauStatut.name());
         absenceRepository.save(absence);
 
         return ResponseEntity.ok("Statut de " + etudiant.getPrenom() + " " + etudiant.getNom() + " mis à jour : " + nouveauStatut);
+    }
+
+    @Override
+    public Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> response = new HashMap<>();
+        // Recherche de l'absence par ID (ou autre critère selon le DTO)
+        if (absenceRequestDto.getId() == "") {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        Optional<Absence> optionalAbsence = absenceRepository.findById(String.valueOf(absenceRequestDto.getId()));
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        Absence absence = optionalAbsence.get();
+        // Mettre à jour le statut de la justification
+        absence.setStatus("JUSTIFIE"); //
+        absenceRepository.save(absence);
+
+        response.put("success", true);
+        response.put("message", "Justification validée avec succès.");
+        response.put("absence", absence);
+        return response;
     }
 
     @Override

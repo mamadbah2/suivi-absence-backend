@@ -2,6 +2,7 @@ package sn.dev.suiviabsence.conifg;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -18,7 +19,12 @@ public class RouteChecker {
     private static final List<String> validPaths = List.of(
             "/app/auth/login",
             "/app/auth/logout",
-            // Anciens chemins (à conserver pour compatibilité)
+            "/swagger-ui",        // ✅ Sans extension
+            "/swagger-resources",
+            "/webjars",
+            "/v3/api-docs",      // ✅ Sans /**
+            "/error",
+            // ... autres chemins valides
             "/absences/mobiles/premiers",
             "/absences/mobiles/rechercher",
             "/absences/mobiles/pointer",
@@ -35,10 +41,11 @@ public class RouteChecker {
             "/v3/api-docs",
             "/v3/api-docs/",
             "/app/absences/mobiles/list",
-            "/app/absences/list"
+            "/app/absences/list",
+            "/app/absences/validate"
     );
-    @Autowired
-    public RouteChecker(RequestMappingHandlerMapping handlerMapping) {
+
+    public RouteChecker(@Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping handlerMapping) {
         this.handlerMapping = handlerMapping;
     }
 

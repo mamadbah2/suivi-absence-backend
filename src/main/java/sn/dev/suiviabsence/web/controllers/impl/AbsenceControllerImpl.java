@@ -40,10 +40,16 @@ public class AbsenceControllerImpl implements AbsenceController {
         return null;
     }
 
-    @Override
-    public ResponseEntity<Map<String, Object>> validateJustification(AbsenceRequestDto absenceRequestDto) {
-        return null;
+    public ResponseEntity<Map<String, Object>> validerJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> result = absenceService.validerJustification(absenceRequestDto);
+        if (Boolean.TRUE.equals(result.get("success"))) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
     }
+
+
 
     @Override
     public ResponseEntity<List<Absence>> getAbsenceByClasse(String classe) {
