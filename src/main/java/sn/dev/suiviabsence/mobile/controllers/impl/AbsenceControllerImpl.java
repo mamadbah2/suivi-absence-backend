@@ -62,14 +62,8 @@ public class AbsenceControllerImpl implements AbsenceController {
                     description = "Accès refusé - Rôle VIGILE requis"
             )
     })
-    public ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers(
-            @Parameter(
-                    description = "Date au format YYYY-MM-DD. Si non spécifiée, utilise la date courante",
-                    example = "2024-01-15",
-                    required = false
-            )
-            String date) {
-        List<AbsenceMobileSimpleResponse> etudiants = absenceService.getPremiersEtudiantsDuJour(date);
+    public ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers() {
+        List<AbsenceMobileSimpleResponse> etudiants = absenceService.getPremiersEtudiantsDuJour();
         if (etudiants.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface AbsenceService {
-    List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour(String date);
+    List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour();
     Optional<PointageEtudiantResponse> rechercherEtudiantPourCours(String matricule);
     ResponseEntity<String> pointerEtudiant(String matricule);
     Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto);

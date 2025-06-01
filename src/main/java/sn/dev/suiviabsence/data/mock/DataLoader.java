@@ -13,6 +13,8 @@ import sn.dev.suiviabsence.data.enums.Status;
 import sn.dev.suiviabsence.data.repositories.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
@@ -144,6 +146,57 @@ public class DataLoader {
         e5.setMatricule("ETD005");
         e5.setClasse(classe5);
         etudiantRepository.save(e5);
+        
+        // Ajouter plus d'étudiants pour avoir plus d'absences/présences
+        Etudiant e6 = new Etudiant();
+        e6.setNom("Seck");
+        e6.setPrenom("Oumar");
+        e6.setEmail("oumar.seck@ism.edu.sn");
+        e6.setPassword(passwordEncoder.encode("password6"));
+        e6.setRole(Role.ETUDIANT);
+        e6.setMatricule("ETD006");
+        e6.setClasse(classe1);
+        etudiantRepository.save(e6);
+
+        Etudiant e7 = new Etudiant();
+        e7.setNom("Gueye");
+        e7.setPrenom("Aida");
+        e7.setEmail("aida.gueye@ism.edu.sn");
+        e7.setPassword(passwordEncoder.encode("password7"));
+        e7.setRole(Role.ETUDIANT);
+        e7.setMatricule("ETD007");
+        e7.setClasse(classe1);
+        etudiantRepository.save(e7);
+
+        Etudiant e8 = new Etudiant();
+        e8.setNom("Mbaye");
+        e8.setPrenom("Cheikh");
+        e8.setEmail("cheikh.mbaye@ism.edu.sn");
+        e8.setPassword(passwordEncoder.encode("password8"));
+        e8.setRole(Role.ETUDIANT);
+        e8.setMatricule("ETD008");
+        e8.setClasse(classe2);
+        etudiantRepository.save(e8);
+
+        Etudiant e9 = new Etudiant();
+        e9.setNom("Sarr");
+        e9.setPrenom("Mariama");
+        e9.setEmail("mariama.sarr@ism.edu.sn");
+        e9.setPassword(passwordEncoder.encode("password9"));
+        e9.setRole(Role.ETUDIANT);
+        e9.setMatricule("ETD009");
+        e9.setClasse(classe3);
+        etudiantRepository.save(e9);
+
+        Etudiant e10 = new Etudiant();
+        e10.setNom("Faye");
+        e10.setPrenom("Abdoulaye");
+        e10.setEmail("abdoulaye.faye@ism.edu.sn");
+        e10.setPassword(passwordEncoder.encode("password10"));
+        e10.setRole(Role.ETUDIANT);
+        e10.setMatricule("ETD010");
+        e10.setClasse(classe4);
+        etudiantRepository.save(e10);
 
         // Module
         Module module1 = new Module();
@@ -216,7 +269,7 @@ public class DataLoader {
         coursRepository.save(cours1);
 
         Cours cours2 = new Cours();
-        cours2.setDate("2024-05-26");
+        cours2.setDate("2025-06-01");
         cours2.setHeureDebut("08:00");
         cours2.setHeureFin("10:00");
         cours2.setModule(module2);
@@ -289,7 +342,7 @@ public class DataLoader {
 
         // Absences
         Absence a1 = new Absence();
-        a1.setDate("2024-05-25");
+        a1.setDate("2025-06-01");
         a1.setHeure("08:40");
         a1.setStatus(Status.ABSENT);
         a1.setJustification("Retard de transport");
@@ -306,56 +359,159 @@ public class DataLoader {
         a2.setCours(cours3);
         absenceRepository.save(a2);
         
-        // Ajouter des cours pour la date actuelle (31 mai 2025)
-        String today = LocalDate.now().toString(); // "2025-05-31"
+        // Ajouter des cours pour la date actuelle (1 juin 2025)
+        String today = "2025-06-01"; // Date fixe pour les tests
+        LocalDate todayDate = LocalDate.parse(today);
         
-        // Cours d'aujourd'hui pour la classe 1
-        Cours coursAujourdhui1 = new Cours();
-        coursAujourdhui1.setDate(today);
-        coursAujourdhui1.setHeureDebut("08:00");
-        coursAujourdhui1.setHeureFin("12:00");
-        coursAujourdhui1.setModule(module1);
-        coursAujourdhui1.setClasse(classe1);
-        coursRepository.save(coursAujourdhui1);
+        // Cours pour aujourd'hui (2025-06-01)
+        Cours coursToday1 = new Cours();
+        coursToday1.setDate(today);
+        coursToday1.setHeureDebut("08:00");
+        coursToday1.setHeureFin("12:00");
+        coursToday1.setModule(module1);
+        coursToday1.setClasse(classe1);
+        coursRepository.save(coursToday1);
         
-        // Cours d'aujourd'hui pour la classe 2
-        Cours coursAujourdhui2 = new Cours();
-        coursAujourdhui2.setDate(today);
-        coursAujourdhui2.setHeureDebut("09:00");
-        coursAujourdhui2.setHeureFin("11:00");
-        coursAujourdhui2.setModule(module2);
-        coursAujourdhui2.setClasse(classe2);
-        coursRepository.save(coursAujourdhui2);
+        Cours coursToday2 = new Cours();
+        coursToday2.setDate(today);
+        coursToday2.setHeureDebut("09:00");
+        coursToday2.setHeureFin("11:00");
+        coursToday2.setModule(module2);
+        coursToday2.setClasse(classe2);
+        coursRepository.save(coursToday2);
         
-        // Ajouter des absences pour les cours d'aujourd'hui
-        // Étudiant 1 absent au cours d'aujourd'hui
-        Absence absenceAujourdhui1 = new Absence();
-        absenceAujourdhui1.setDate(today);
-        absenceAujourdhui1.setHeure(coursAujourdhui1.getHeureDebut());
-        absenceAujourdhui1.setStatus(Status.ABSENT);
-        absenceAujourdhui1.setJustification(null);
-        absenceAujourdhui1.setEtudiant(e1);
-        absenceAujourdhui1.setCours(coursAujourdhui1);
-        absenceRepository.save(absenceAujourdhui1);
+        Cours coursToday3 = new Cours();
+        coursToday3.setDate(today);
+        coursToday3.setHeureDebut("13:00");
+        coursToday3.setHeureFin("15:00");
+        coursToday3.setModule(module5);
+        coursToday3.setClasse(classe3);
+        coursRepository.save(coursToday3);
+
+        Cours coursToday4 = new Cours();
+        coursToday4.setDate(today);
+        coursToday4.setHeureDebut("15:30");
+        coursToday4.setHeureFin("17:30");
+        coursToday4.setModule(module7);
+        coursToday4.setClasse(classe4);
+        coursRepository.save(coursToday4);
         
-        // Étudiant 2 absent au cours d'aujourd'hui
-        Absence absenceAujourdhui2 = new Absence();
-        absenceAujourdhui2.setDate(today);
-        absenceAujourdhui2.setHeure(coursAujourdhui2.getHeureDebut());
-        absenceAujourdhui2.setStatus(Status.ABSENT);
-        absenceAujourdhui2.setJustification(null);
-        absenceAujourdhui2.setEtudiant(e2);
-        absenceAujourdhui2.setCours(coursAujourdhui2);
-        absenceRepository.save(absenceAujourdhui2);
+        // Ajouter des absences avec les statuts PRESENT, RETARD et ABSENT pour aujourd'hui
         
-        // Étudiant 3 absent au cours d'aujourd'hui (ajoutez d'autres étudiants si nécessaire)
-        Absence absenceAujourdhui3 = new Absence();
-        absenceAujourdhui3.setDate(today);
-        absenceAujourdhui3.setHeure(coursAujourdhui1.getHeureDebut());
-        absenceAujourdhui3.setStatus(Status.ABSENT);
-        absenceAujourdhui3.setJustification(null);
-        absenceAujourdhui3.setEtudiant(e3);
-        absenceAujourdhui3.setCours(coursAujourdhui1);
-        absenceRepository.save(absenceAujourdhui3);
+        // Format des heures pour simuler les pointages à différentes heures
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        
+        // PRÉSENCES
+        // Étudiant 1 - PRESENT (arrivé avant le début du cours)
+        Absence absenceToday1 = new Absence();
+        absenceToday1.setDate(today);
+        absenceToday1.setHeure(LocalTime.of(7, 55).format(timeFormatter));
+        absenceToday1.setStatus(Status.PRESENT);
+        absenceToday1.setJustification(null);
+        absenceToday1.setEtudiant(e1);
+        absenceToday1.setCours(coursToday1);
+        absenceRepository.save(absenceToday1);
+        
+        // Étudiant 2 - PRESENT (arrivé avant le début du cours)
+        Absence absenceToday2 = new Absence();
+        absenceToday2.setDate(today);
+        absenceToday2.setHeure(LocalTime.of(8, 50).format(timeFormatter));
+        absenceToday2.setStatus(Status.PRESENT);
+        absenceToday2.setJustification(null);
+        absenceToday2.setEtudiant(e2);
+        absenceToday2.setCours(coursToday2);
+        absenceRepository.save(absenceToday2);
+        
+        // Étudiant 6 - PRESENT (arrivé juste à l'heure)
+        Absence absenceToday3 = new Absence();
+        absenceToday3.setDate(today);
+        absenceToday3.setHeure(LocalTime.of(8, 0).format(timeFormatter));
+        absenceToday3.setStatus(Status.PRESENT);
+        absenceToday3.setJustification(null);
+        absenceToday3.setEtudiant(e6);
+        absenceToday3.setCours(coursToday1);
+        absenceRepository.save(absenceToday3);
+        
+        // Étudiant 7 - PRESENT
+        Absence absenceToday4 = new Absence();
+        absenceToday4.setDate(today);
+        absenceToday4.setHeure(LocalTime.of(7, 58).format(timeFormatter));
+        absenceToday4.setStatus(Status.PRESENT);
+        absenceToday4.setJustification(null);
+        absenceToday4.setEtudiant(e7);
+        absenceToday4.setCours(coursToday1);
+        absenceRepository.save(absenceToday4);
+        
+        // RETARDS
+        // Étudiant 3 - RETARD (arrivé après le début du cours)
+        Absence absenceToday5 = new Absence();
+        absenceToday5.setDate(today);
+        absenceToday5.setHeure(LocalTime.of(13, 10).format(timeFormatter));
+        absenceToday5.setStatus(Status.RETARD);
+        absenceToday5.setJustification("Transport en commun");
+        absenceToday5.setEtudiant(e3);
+        absenceToday5.setCours(coursToday3);
+        absenceRepository.save(absenceToday5);
+        
+        // Étudiant 8 - RETARD 
+        Absence absenceToday6 = new Absence();
+        absenceToday6.setDate(today);
+        absenceToday6.setHeure(LocalTime.of(9, 15).format(timeFormatter));
+        absenceToday6.setStatus(Status.RETARD);
+        absenceToday6.setJustification("Problème de santé");
+        absenceToday6.setEtudiant(e8);
+        absenceToday6.setCours(coursToday2);
+        absenceRepository.save(absenceToday6);
+        
+        // Étudiant 9 - RETARD
+        Absence absenceToday7 = new Absence();
+        absenceToday7.setDate(today);
+        absenceToday7.setHeure(LocalTime.of(13, 20).format(timeFormatter));
+        absenceToday7.setStatus(Status.RETARD);
+        absenceToday7.setJustification("Panne de voiture");
+        absenceToday7.setEtudiant(e9);
+        absenceToday7.setCours(coursToday3);
+        absenceRepository.save(absenceToday7);
+        
+        // ABSENTS
+        // Étudiant 4 - ABSENT
+        Absence absenceToday8 = new Absence();
+        absenceToday8.setDate(today);
+        absenceToday8.setHeure(coursToday4.getHeureDebut());
+        absenceToday8.setStatus(Status.ABSENT);
+        absenceToday8.setJustification(null);
+        absenceToday8.setEtudiant(e4);
+        absenceToday8.setCours(coursToday4);
+        absenceRepository.save(absenceToday8);
+        
+        // Étudiant 5 - ABSENT
+        Absence absenceToday9 = new Absence();
+        absenceToday9.setDate(today);
+        absenceToday9.setHeure(coursToday1.getHeureDebut());
+        absenceToday9.setStatus(Status.ABSENT);
+        absenceToday9.setJustification(null);
+        absenceToday9.setEtudiant(e5);
+        absenceToday9.setCours(coursToday1);
+        absenceRepository.save(absenceToday9);
+        
+        // Étudiant 10 - PRESENT (arrivé très tôt)
+        Absence absenceToday10 = new Absence();
+        absenceToday10.setDate(today);
+        absenceToday10.setHeure(LocalTime.of(15, 15).format(timeFormatter));
+        absenceToday10.setStatus(Status.PRESENT);
+        absenceToday10.setJustification(null);
+        absenceToday10.setEtudiant(e10);
+        absenceToday10.setCours(coursToday4);
+        absenceRepository.save(absenceToday10);
+        
+        // Ajout supplémentaire de PRESENT et RETARD pour tester la limite de 5
+        Absence absenceToday11 = new Absence();
+        absenceToday11.setDate(today);
+        absenceToday11.setHeure(LocalTime.of(8, 5).format(timeFormatter));
+        absenceToday11.setStatus(Status.RETARD);
+        absenceToday11.setJustification("Trafic");
+        absenceToday11.setEtudiant(e5);
+        absenceToday11.setCours(coursToday2);
+        absenceRepository.save(absenceToday11);
     }
 }

@@ -33,9 +33,7 @@ public interface AbsenceController {
     })
     // @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/premiers")
-    ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers(
-            @Parameter(description = "Date au format YYYY-MM-DD, si non fourni la date du jour sera utilisée") 
-            @RequestParam String date);
+    ResponseEntity<List<AbsenceMobileSimpleResponse>> getPremiers();
 
     @Operation(summary = "Rechercher un étudiant pour un cours", 
                description = "Recherche un étudiant par son matricule et retourne ses informations avec son cours du jour")

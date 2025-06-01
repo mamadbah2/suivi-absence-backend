@@ -39,9 +39,9 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 
     @Override
-    public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour(String date) {
+    public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour() {
         String dateAujourdhui = java.time.LocalDate.now().toString();
-        List<Cours> coursList = coursRepository.findByDate(date);
+        List<Cours> coursList = coursRepository.findByDate(dateAujourdhui);
 
         List<AbsenceMobileSimpleResponse> resultats = new ArrayList<>();
 

@@ -36,18 +36,12 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     private final EtudiantRepository etudiantRepository;
 
     @Override
-    public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour(String date) {
+    public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour() {
         // Si date non fournie, utiliser la date du jour
-        final String dateEffective;
-        if (date == null || date.isEmpty()) {
-            dateEffective = LocalDate.now().toString();
-        } else {
-            dateEffective = date;
-        }
 
         // Récupérer toutes les absences pour la date donnée
         List<Absence> toutesLesAbsences = absenceRepository.findAll().stream()
-                .filter(absence -> absence.getDate().equals(dateEffective))
+                .filter(absence -> absence.getDate().equals(LocalDate.now().toString()))
                 .collect(Collectors.toList());
 
         // Filtrer les absences où l'étudiant a pointé (PRESENT ou RETARD)
