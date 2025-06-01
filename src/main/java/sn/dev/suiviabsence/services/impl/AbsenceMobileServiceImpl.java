@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
 @Service
 @Primary
@@ -146,6 +148,12 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         }
 
         return ResponseEntity.ok("Statut de " + etudiant.getPrenom() + " " + etudiant.getNom() + " mis à jour.");
+    }
+
+    @Override
+    public Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validerJustification'");
     }
 
     @Override

@@ -2,6 +2,7 @@ package sn.dev.suiviabsence.conifg;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -37,8 +38,8 @@ public class RouteChecker {
             "/app/absences/mobiles/list",
             "/app/absences/list"
     );
-    @Autowired
-    public RouteChecker(RequestMappingHandlerMapping handlerMapping) {
+
+    public RouteChecker(@Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping handlerMapping) {
         this.handlerMapping = handlerMapping;
     }
 
