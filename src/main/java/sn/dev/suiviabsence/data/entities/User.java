@@ -11,6 +11,7 @@ import sn.dev.suiviabsence.data.enums.Role;
         String nom;
         String prenom;
         String email;
+        String image;
         String password;
         Role role;
     }

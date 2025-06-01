@@ -37,7 +37,8 @@ public class JwtUtils {
         claims.put("nom", user.getNom());
         claims.put("prenom", user.getPrenom());
         claims.put("email", user.getEmail());
-        
+        claims.put("image", user.getImage());
+        System.out.println(user.getImage());
         // Ajouter le matricule si c'est un étudiant
         if (user instanceof Etudiant) {
             claims.put("matricule", ((Etudiant) user).getMatricule());

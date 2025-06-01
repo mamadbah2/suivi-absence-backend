@@ -52,6 +52,7 @@ public class DataLoader {
         admin.setEmail("ibrahim.sow@groupeism.sn");
         admin.setPassword(passwordEncoder.encode("admin1"));
         admin.setRole(Role.ADMIN);
+        admin.setImage("https://hackaton-groupe10.s3.eu-north-1.amazonaws.com/Jermain+Kerman+-+Corporate(1)+1.png");
         userRepository.save(admin);
 
         User vigile2 = new User();

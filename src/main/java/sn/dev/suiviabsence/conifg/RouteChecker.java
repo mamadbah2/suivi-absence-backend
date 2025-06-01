@@ -42,7 +42,8 @@ public class RouteChecker {
             "/v3/api-docs/",
             "/app/absences/mobiles/list",
             "/app/absences/list",
-            "/app/absences/validate"
+            "/app/absences/validate",
+            "/app/justificatifs/upload"
     );
 
     public RouteChecker(@Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping handlerMapping) {

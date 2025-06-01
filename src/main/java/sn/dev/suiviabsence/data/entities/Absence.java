@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import sn.dev.suiviabsence.data.enums.Status;
+import java.util.List;
 
 @Document
 @Data
@@ -15,6 +16,8 @@ public class Absence {
    String heure;
    String date;
    String justification;
+   // Liste des URLs des justificatifs stockés
+   List<String> justificatifs;
    Etudiant etudiant;
    Cours cours;
    Status status;
@@ -23,7 +26,6 @@ public class Absence {
       this.status = nouveauStatut;
    }
 
-   // Implémentation pour convertir une String en Status
    public void setStatus(String name) {
       try {
          this.status = Status.valueOf(name);

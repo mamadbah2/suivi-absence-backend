@@ -52,7 +52,9 @@ public class SecurityConfig {
                         .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/pointer").hasRole("VIGILE")
                         .requestMatchers("/app/absences/mobiles/list").hasRole("VIGILE")
+                        .requestMatchers("app/justificatifs/upload").hasRole("ETUDIANT")
                         .requestMatchers("/app/absences/list").hasRole("ADMIN")
+
                         .requestMatchers("/app/absences/validate").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

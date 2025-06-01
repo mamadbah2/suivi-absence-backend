@@ -66,7 +66,7 @@ public class AuthControllerImpl implements AuthController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect email");
         }
 
-        System.out.println("request: " + request);
+        System.out.println("--------------------------------------------------------------------------------------------: " + checkUser);
         System.out.println("Vérification du mot de passe pour: " + request.getEmail());
 
         if (passwordEncoder.matches(request.getPassword(), checkUser.getPassword())) {
@@ -83,7 +83,8 @@ public class AuthControllerImpl implements AuthController {
                         checkUser.getNom(),
                         checkUser.getPrenom(),
                         checkUser.getRole(),
-                        etudiant.getMatricule()
+                        etudiant.getMatricule(),
+                        etudiant.getImage()
                 );
             } else {
                 // Pour les autres types d'utilisateurs (comme VIGILE)
@@ -92,7 +93,8 @@ public class AuthControllerImpl implements AuthController {
                         checkUser.getEmail(),
                         checkUser.getNom(),
                         checkUser.getPrenom(),
-                        checkUser.getRole()
+                        checkUser.getRole(),
+                        checkUser.getImage()
                 );
             }
 
