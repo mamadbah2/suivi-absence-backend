@@ -32,6 +32,7 @@ public class RouteChecker {
             "/app/absences/mobiles/premiers",
             "/app/absences/mobiles/rechercher",
             "/app/absences/mobiles/pointer",
+            "/app/absences/mobiles/etudiant/**",
             // Routes Swagger
             "/swagger-ui",
             "/swagger-ui/",

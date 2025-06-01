@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.controllers.AbsenceController;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
@@ -157,8 +158,10 @@ public class AbsenceControllerImpl implements AbsenceController {
         return ResponseEntity.ok(response);
     }
 
-//    @Override
-//    public ResponseEntity<Map<String, Object>> updateJustification(AbsenceRequestDto absenceRequestDto) {
-//        return null;
-//    }
+    @Override
+    public ResponseEntity<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule) {
+        Optional<EtudiantAbsencesResponse> response = absenceService.getAbsencesEtudiant(matricule);
+        return response.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

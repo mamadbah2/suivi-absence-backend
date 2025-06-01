@@ -2,11 +2,11 @@ package sn.dev.suiviabsence.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.data.domain.Pageable;
 
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 
@@ -20,6 +20,11 @@ public interface AbsenceService {
     ResponseEntity<String> pointerEtudiant(String matricule);
     Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto);
     Page<Absence> getAllAbsences(Pageable pageable);
-
-
+    
+    /**
+     * Récupère toutes les absences et retards d'un étudiant spécifique
+     * @param matricule Le matricule de l'étudiant
+     * @return Les informations de l'étudiant et ses absences/retards
+     */
+    Optional<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule);
 }

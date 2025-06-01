@@ -23,6 +23,7 @@ import sn.dev.suiviabsence.data.enums.Status;
 import sn.dev.suiviabsence.data.repositories.AbsenceRepository;
 import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
@@ -145,5 +146,51 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     @Override
     public Page<Absence> getAllAbsences(Pageable pageable) {
         return absenceRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule) {
+        // Récupérer l'étudiant par son matricule
+        Optional<Etudiant> etudiantOpt = etudiantRepository.findByMatricule(matricule);
+        if (etudiantOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Etudiant etudiant = etudiantOpt.get();
+        
+        // Récupérer toutes les absences de cet étudiant
+        List<Absence> absences = absenceRepository.findByEtudiantId(etudiant.getId());
+        
+        // Exclure les absences avec status PRESENT (on ne veut que les absences et retards)
+        absences = absences.stream()
+                .filter(absence -> absence.getStatus() == Status.ABSENT || absence.getStatus() == Status.RETARD)
+                .collect(Collectors.toList());
+        
+        // Créer la réponse
+        EtudiantAbsencesResponse response = new EtudiantAbsencesResponse();
+        response.setMatricule(etudiant.getMatricule());
+        response.setNom(etudiant.getNom());
+        response.setPrenom(etudiant.getPrenom());
+        response.setClasse(etudiant.getClasse() != null ? etudiant.getClasse().getNom() : "Non définie");
+        
+        // Convertir les absences en DTO
+        List<EtudiantAbsencesResponse.AbsenceDetail> absenceDetails = absences.stream()
+                .map(absence -> {
+                    EtudiantAbsencesResponse.AbsenceDetail detail = new EtudiantAbsencesResponse.AbsenceDetail();
+                    detail.setDate(absence.getDate());
+                    detail.setHeureDebut(absence.getCours().getHeureDebut());
+                    detail.setHeureFin(absence.getCours().getHeureFin());
+                    detail.setModule(absence.getCours().getModule().getNom());
+                    detail.setProfesseur(absence.getCours().getModule().getNomProf());
+                    detail.setStatus(absence.getStatus());
+                    detail.setJustification(absence.getJustification());
+                    detail.setHeurePointage(absence.getHeure());
+                    return detail;
+                })
+                .collect(Collectors.toList());
+        
+        response.setAbsences(absenceDetails);
+        
+        return Optional.of(response);
     }
 }

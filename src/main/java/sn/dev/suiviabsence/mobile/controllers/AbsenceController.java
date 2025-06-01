@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 
 import java.util.List;
@@ -74,6 +75,21 @@ public interface AbsenceController {
             @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Taille de la page pour la pagination, par défaut 10")
             @RequestParam(defaultValue = "10") int size
+    );
+
+    @Operation(summary = "Récupérer toutes les absences et retards d'un étudiant", 
+               description = "Retourne les détails complets de toutes les absences et retards d'un étudiant spécifique")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Absences récupérées avec succès",
+                     content = @Content(schema = @Schema(implementation = EtudiantAbsencesResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Étudiant non trouvé"),
+        @ApiResponse(responseCode = "401", description = "Non autorisé - Token JWT manquant ou invalide"),
+        @ApiResponse(responseCode = "403", description = "Accès refusé - Rôle insuffisant")
+    })
+    @GetMapping("/etudiant/{matricule}")
+    ResponseEntity<EtudiantAbsencesResponse> getAbsencesEtudiant(
+            @Parameter(description = "Matricule de l'étudiant", required = true)
+            @PathVariable String matricule
     );
 
 }

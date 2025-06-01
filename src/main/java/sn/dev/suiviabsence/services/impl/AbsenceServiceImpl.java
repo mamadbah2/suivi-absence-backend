@@ -16,6 +16,7 @@ import sn.dev.suiviabsence.data.repositories.AbsenceRepository;
 import sn.dev.suiviabsence.data.repositories.CoursRepository;
 import sn.dev.suiviabsence.data.repositories.EtudiantRepository;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
+import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
@@ -163,5 +164,11 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public Page<Absence> getAllAbsences(Pageable pageable) {
         return absenceRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAbsencesEtudiant'");
     }
 }
