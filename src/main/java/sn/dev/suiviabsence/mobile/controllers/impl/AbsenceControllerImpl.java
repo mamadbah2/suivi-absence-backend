@@ -11,19 +11,23 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.multipart.MultipartFile;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.controllers.AbsenceController;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
+import sn.dev.suiviabsence.services.impl.S3Service;
 import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController("mobileAbsenceController")
@@ -34,7 +38,6 @@ import java.util.Optional;
 public class AbsenceControllerImpl implements AbsenceController {
 
     private final AbsenceService absenceService;
-
     @Override
     @Operation(
             summary = "Récupérer les premiers étudiants du jour",
@@ -161,6 +164,11 @@ public class AbsenceControllerImpl implements AbsenceController {
         Page<Absence> absences = absenceService.getAllAbsences(PageRequest.of(page, size));
         Page<AbsenceMobileSimpleResponse> response = absences.map(MapperAbsenceMobile::toDto);
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> uploadJustificatif(String idAbsence, MultipartFile file) {
+        return ResponseEntity.ok(absenceService.saveJustificatif(idAbsence, file));
     }
 
 //    @Override

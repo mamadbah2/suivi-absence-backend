@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.data.entities.Cours;
 import sn.dev.suiviabsence.data.entities.Etudiant;
@@ -156,5 +157,10 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public Page<Absence> getAllAbsences(Pageable pageable) {
         return absenceRepository.findAll(pageable);
+    }
+
+    @Override
+    public Map<String, Object> saveJustificatif(String idAbsence, MultipartFile file) {
+        return Map.of();
     }
 }

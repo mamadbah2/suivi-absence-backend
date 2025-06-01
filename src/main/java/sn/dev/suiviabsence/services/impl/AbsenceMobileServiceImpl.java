@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.data.entities.Etudiant;
 import sn.dev.suiviabsence.data.enums.Status;
@@ -31,6 +33,8 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     private final AbsenceRepository absenceRepository;
     private final EtudiantRepository etudiantRepository;
 
+    @Autowired
+    private S3Service s3Service;
     @Override
     public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour(String date) {
         // Si date non fournie, utiliser la date du jour
@@ -174,5 +178,25 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     @Override
     public Page<Absence> getAllAbsences(Pageable pageable) {
         return absenceRepository.findAll(pageable);
+    }
+
+    @Override
+    public Map<String, Object> saveJustificatif(String idAbsence, MultipartFile file) {
+        Map<String, Object> response = new HashMap<>();
+        Optional<Absence> optionalAbsence = absenceRepository.findById(idAbsence);
+        List<Absence> absences = absenceRepository.findAll();
+        if (optionalAbsence.isEmpty()) {
+            response.put("error", absences);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        Absence absence = optionalAbsence.get();
+        absence.addJustificatif(s3Service.uploadFile(file));
+        absenceRepository.save(absence);
+        response.put("success", true);
+        response.put("message", "Justification validée avec succès.");
+        response.put("absence", absence);
+
+        return Map.of();
     }
 }

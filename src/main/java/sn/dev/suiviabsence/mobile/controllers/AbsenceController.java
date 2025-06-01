@@ -13,10 +13,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/app/absences/mobiles")
 @Tag(name = "Gestion des absences (Mobile)", description = "API pour la gestion des absences via l'application mobile")
@@ -76,6 +78,12 @@ public interface AbsenceController {
             @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "Taille de la page pour la pagination, par défaut 10")
             @RequestParam(defaultValue = "10") int size
+    );
+
+    @PostMapping("/justificatif")
+    ResponseEntity<Map<String, Object>> uploadJustificatif(
+            @RequestParam String idAbsence,
+            @RequestParam MultipartFile file
     );
 
 }

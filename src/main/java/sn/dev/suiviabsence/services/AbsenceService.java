@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.web.multipart.MultipartFile;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
@@ -20,6 +21,7 @@ public interface AbsenceService {
     ResponseEntity<String> pointerEtudiant(String matricule);
     Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto);
     Page<Absence> getAllAbsences(Pageable pageable);
+    Map<String, Object> saveJustificatif(String idAbsence, MultipartFile file);
 
 
 }
