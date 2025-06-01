@@ -69,7 +69,7 @@ public interface AbsenceController {
     );
 
     @Operation(summary = "Liste de tous les absences")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('VIGILE')")
     @GetMapping("/list")
     ResponseEntity<Page<AbsenceMobileSimpleResponse>> getAllAbsences(
             @Parameter(description = "Numéro de page pour la pagination, par défaut 0")
