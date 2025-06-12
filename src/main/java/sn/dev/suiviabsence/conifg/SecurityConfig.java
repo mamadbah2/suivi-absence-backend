@@ -52,8 +52,10 @@ public class SecurityConfig {
                         .requestMatchers("/absences/mobiles/rechercher").hasRole("VIGILE")
                         .requestMatchers("/absences/mobiles/pointer").hasRole("VIGILE")
                         .requestMatchers("/app/absences/mobiles/list").hasRole("VIGILE")
-                        .requestMatchers("/app/absences/mobiles/etudiant/{matricule}").hasAnyRole("ADMIN", "ETUDIANT", "VIGILE")
+                        .requestMatchers("/app/absences/mobiles/etudiant/{matricule}").permitAll()
                         .requestMatchers("/app/absences/list").hasRole("ADMIN")
+
+                        .requestMatchers("/app/absences/validate").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                  .addFilterAfter(unknownURI, jwtAuthFilter.getClass())

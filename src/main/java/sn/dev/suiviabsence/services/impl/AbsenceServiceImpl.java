@@ -2,6 +2,7 @@ package sn.dev.suiviabsence.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -139,7 +140,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     public Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto) {
         Map<String, Object> response = new HashMap<>();
         // Recherche de l'absence par ID (ou autre critère selon le DTO)
-        if (absenceRequestDto.getId() == null) {
+        if (absenceRequestDto.getId() == "") {
             response.put("success", false);
             response.put("message", "ID d'absence manquant.");
             return response;
@@ -152,7 +153,7 @@ public class AbsenceServiceImpl implements AbsenceService {
         }
         Absence absence = optionalAbsence.get();
         // Mettre à jour le statut de la justification
-        absence.setStatus("justifiee"); // ou autre valeur selon votre logique métier
+        absence.setStatus("JUSTIFIE"); //
         absenceRepository.save(absence);
 
         response.put("success", true);

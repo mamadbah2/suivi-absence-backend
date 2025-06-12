@@ -23,19 +23,22 @@ public class UserLoginResponse {
     private Role role;
     @Schema(description = "Matricule de l'étudiant (uniquement pour les étudiants)", example = "ET001")
     private String matricule; // Pour les étudiants, null pour les autres utilisateurs
-    
+    @Schema(description = "Image de l'étudiant (uniquement pour les étudiants)", example = "ET001")
+    private String image;
+
     // Constructeur original maintenu pour compatibilité
     public UserLoginResponse(String token) {
         this.token = token;
     }
     
     // Constructeur pour les utilisateurs non-étudiants
-    public UserLoginResponse(String token, String email, String nom, String prenom, Role role) {
+    public UserLoginResponse(String token, String email, String nom, String prenom, Role role, String image) {
         this.token = token;
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.role = role;
+        this.image = image;
         this.matricule = null;
     }
 }

@@ -10,6 +10,7 @@ public class MapperAbsence {
 
     public static AbsenceSimpleResponseDto toDto(Absence absence) {
         return new AbsenceSimpleResponseDto(
+                absence.getId(),
                 absence.getEtudiant().getMatricule(),
                 absence.getEtudiant().getNom(),
                 absence.getEtudiant().getPrenom(),

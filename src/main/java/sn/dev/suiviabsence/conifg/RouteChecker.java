@@ -19,10 +19,10 @@ public class RouteChecker {
     private static final List<String> validPaths = List.of(
             "/app/auth/login",
             "/app/auth/logout",
-            "/swagger-ui",        // ✅ Sans extension
+            "/swagger-ui", // ✅ Sans extension
             "/swagger-resources",
             "/webjars",
-            "/v3/api-docs",      // ✅ Sans /**
+            "/v3/api-docs", // ✅ Sans /**
             "/error",
             // ... autres chemins valides
             "/absences/mobiles/premiers",
@@ -32,23 +32,24 @@ public class RouteChecker {
             "/app/absences/mobiles/premiers",
             "/app/absences/mobiles/rechercher",
             "/app/absences/mobiles/pointer",
-            "/app/absences/mobiles/etudiant/**",
+            "/app/absences/mobiles/etudiant/ETD001",
             // Routes Swagger
             "/swagger-ui",
-        "/swagger-ui/",
-        "/swagger-ui.html",
-        "/swagger-ui/index.html",
-        "/swagger-resources",
-        "/swagger-resources/",
-        "/swagger-resources/**",
-        "/v3/api-docs",
-        "/v3/api-docs/",
-        "/v3/api-docs/**",
-        "/webjars",
-        "/webjars/**",
+            "/swagger-ui/",
+            "/swagger-ui.html",
+            "/swagger-ui/index.html",
+            "/swagger-resources",
+            "/swagger-resources/",
+            "/swagger-resources/**",
+            "/v3/api-docs",
+            "/v3/api-docs/",
+            "/v3/api-docs/**",
+            "/webjars",
+            "/webjars/**",
             "/app/absences/mobiles/list",
-            "/app/absences/list"
-    );
+            "/app/absences/list",
+            "/app/absences/validate",
+            "/app/justificatifs/upload");
 
     public RouteChecker(@Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping handlerMapping) {
         this.handlerMapping = handlerMapping;

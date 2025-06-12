@@ -66,13 +66,15 @@ public class AuthControllerImpl implements AuthController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect email");
         }
 
-        System.out.println("request: " + request);
+        System.out.println("--------------------------------------------------------------------------------------------: " + checkUser);
         System.out.println("Vérification du mot de passe pour: " + request.getEmail());
 
         if (passwordEncoder.matches(request.getPassword(), checkUser.getPassword())) {
             String token = jwtUtils.generateToken(checkUser);
 
+
             UserLoginResponse response;
+
 
             // Si c'est un étudiant, inclure le matricule
             if (checkUser instanceof Etudiant) {
@@ -92,7 +94,8 @@ public class AuthControllerImpl implements AuthController {
                         checkUser.getEmail(),
                         checkUser.getNom(),
                         checkUser.getPrenom(),
-                        checkUser.getRole()
+                        checkUser.getRole(),
+                        ""
                 );
             }
 

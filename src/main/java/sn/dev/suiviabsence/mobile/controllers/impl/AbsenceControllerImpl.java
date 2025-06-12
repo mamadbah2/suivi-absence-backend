@@ -161,6 +161,8 @@ public class AbsenceControllerImpl implements AbsenceController {
     @Override
     public ResponseEntity<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule) {
         Optional<EtudiantAbsencesResponse> response = absenceService.getAbsencesEtudiant(matricule);
+        // affiche la reponse
+        System.out.println("Ses absences sont : " + response.toString());
         return response.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

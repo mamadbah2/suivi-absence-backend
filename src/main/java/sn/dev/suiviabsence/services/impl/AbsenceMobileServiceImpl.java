@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -139,8 +140,27 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
 
     @Override
     public Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validerJustification'");
+        Map<String, Object> response = new HashMap<>();
+        if (absenceRequestDto.getId() == null) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        Optional<Absence> optionalAbsence = absenceRepository.findById(String.valueOf(absenceRequestDto.getId()));
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        Absence absence = optionalAbsence.get();
+        // Mettre à jour le statut de la justification
+        absence.setStatus("JUSTIFIE"); // ou autre valeur selon votre logique métier
+        absenceRepository.save(absence);
+
+        response.put("success", true);
+        response.put("message", "Justification validée avec succès.");
+        response.put("absence", absence);
+        return response;
     }
 
     @Override
