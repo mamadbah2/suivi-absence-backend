@@ -18,13 +18,5 @@ public class AbsenceRequestDto {
     private String date;
     private String heure;
     private String status;
-    public Object getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
-    }
-
-
-
-
-
+    private String justification;
 }

@@ -27,4 +27,11 @@ public interface AbsenceService {
      * @return Les informations de l'étudiant et ses absences/retards
      */
     Optional<EtudiantAbsencesResponse> getAbsencesEtudiant(String matricule);
+    
+    /**
+     * Met à jour uniquement la justification d'une absence
+     * @param absenceRequestDto Contient l'ID de l'absence et la nouvelle justification
+     * @return Un Map contenant le résultat de l'opération (succès ou échec)
+     */
+    Map<String, Object> updateJustification(AbsenceRequestDto absenceRequestDto);
 }

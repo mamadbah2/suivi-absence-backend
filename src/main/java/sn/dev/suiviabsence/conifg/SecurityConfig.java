@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/absences/mobiles/pointer").hasRole("VIGILE")
                         .requestMatchers("/app/absences/mobiles/list").hasRole("VIGILE")
                         .requestMatchers("/app/absences/mobiles/etudiant/{matricule}").permitAll()
+                        .requestMatchers("/app/absences/update/justification").permitAll()
                         .requestMatchers("/app/absences/list").hasRole("ADMIN")
 
                         .requestMatchers("/app/absences/validate").hasRole("ADMIN")

@@ -53,11 +53,11 @@ public class AbsenceControllerImpl implements AbsenceController {
 
     @Override
     public ResponseEntity<Map<String, Object>> updateJustification(AbsenceRequestDto absenceRequestDto) {
-        return null;
+        Map<String, Object> result = absenceService.updateJustification(absenceRequestDto);
+        if (Boolean.TRUE.equals(result.get("success"))) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
     }
-
-//    @Override
-//    public ResponseEntity<Map<String, Object>> updateJustification(AbsenceRequestDto absenceRequestDto) {
-//        return null;
-//    }
 }

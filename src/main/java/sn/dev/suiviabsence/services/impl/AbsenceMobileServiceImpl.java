@@ -213,4 +213,35 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         
         return Optional.of(response);
     }
+
+    @Override
+    public Map<String, Object> updateJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> response = new HashMap<>();
+        
+        // Vérification que l'ID est fourni
+        if (absenceRequestDto.getId() == null || absenceRequestDto.getId().isEmpty()) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        
+        // Recherche de l'absence par ID
+        Optional<Absence> optionalAbsence = absenceRepository.findById(absenceRequestDto.getId());
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        
+        Absence absence = optionalAbsence.get();
+        
+        // Mise à jour uniquement de la justification
+        absence.setJustification(absenceRequestDto.getJustification());
+        absenceRepository.save(absence);
+        
+        response.put("success", true);
+        response.put("message", "Justification mise à jour avec succès.");
+        response.put("absence", absence);
+        return response;
+    }
 }

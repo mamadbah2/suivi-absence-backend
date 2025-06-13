@@ -38,7 +38,7 @@ public interface AbsenceController {
     @GetMapping("/absent/{classe}")
     ResponseEntity<List<Absence>> getAbsenceByClasse(@PathVariable String classe);
 
-    @PutMapping("/update/jutification")
+    @PutMapping("/update/justification")
     ResponseEntity<Map<String, Object>> updateJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
 
