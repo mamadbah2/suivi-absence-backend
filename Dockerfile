@@ -1,17 +1,13 @@
-# Use an official Maven image as the base image
-FROM maven:3.8.4-openjdk-11-slim AS build
-# Set the working directory in the container
+# Étape 1 : build de l'application
+FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
-# Copy the pom.xml and the project files to the container
-COPY pom.xml .
-COPY src ./src
-# Build the application using Maven
-RUN mvn clean package -DskipTests
-# Use an official OpenJDK image as the base image
-FROM openjdk:11-jre-slim
-# Set the working directory in the container
+COPY . ./
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+# Étape 2 : image de production
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
-# Copy the built JAR file from the previous stage to the container
-COPY from=build ./target/suivi-absence-0.0.1-SNAPSHOT.jar ./
-# Set the command to run the application
-CMD ["java", "-jar", "my-application.jar"]
+COPY --from=build /suivi-absence/target/suivi-absence-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
