@@ -197,6 +197,7 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         List<EtudiantAbsencesResponse.AbsenceDetail> absenceDetails = absences.stream()
                 .map(absence -> {
                     EtudiantAbsencesResponse.AbsenceDetail detail = new EtudiantAbsencesResponse.AbsenceDetail();
+                    detail.setId(absence.getId()); // Ajout de l'ID de l'absence
                     detail.setDate(absence.getDate());
                     detail.setHeureDebut(absence.getCours().getHeureDebut());
                     detail.setHeureFin(absence.getCours().getHeureFin());

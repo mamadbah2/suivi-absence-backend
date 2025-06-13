@@ -33,6 +33,9 @@ public class EtudiantAbsencesResponse {
     @AllArgsConstructor
     @Schema(description = "Détails d'une absence")
     public static class AbsenceDetail {
+        @Schema(description = "Identifiant unique de l'absence", example = "62f5e8ab1234567890abcdef")
+        private String id;
+
         @Schema(description = "Date du cours", example = "2025-05-31")
         private String date;
 
