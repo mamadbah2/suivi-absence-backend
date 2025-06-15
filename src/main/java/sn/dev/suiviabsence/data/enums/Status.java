@@ -4,5 +4,6 @@ public enum Status {
     ABSENT,
     RETARD,
     PRESENT,
-    JUSTIFIE
+    JUSTIFIE,
+    REFUSE
 }

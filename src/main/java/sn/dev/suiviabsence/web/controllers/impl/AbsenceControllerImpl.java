@@ -49,6 +49,15 @@ public class AbsenceControllerImpl implements AbsenceController {
         }
     }
 
+    @Override
+    public ResponseEntity<Map<String, Object>> rejecterJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> result = absenceService.rejecterJustification(absenceRequestDto);
+        if (Boolean.TRUE.equals(result.get("success"))) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
+    }
 
 
     @Override

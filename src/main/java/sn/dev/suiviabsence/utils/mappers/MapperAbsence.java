@@ -19,6 +19,7 @@ public class MapperAbsence {
                 absence.getDate(),
                 absence.getHeure(),
                 absence.getJustification(),
+                absence.getJustificatifs(),
                 absence.getStatus()
         );
     }

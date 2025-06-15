@@ -43,6 +43,7 @@ public class RouteChecker {
             "/app/absences/mobiles/list",
             "/app/absences/list",
             "/app/absences/validate",
+            "/app/absences/reject",
             "/app/justificatifs/upload",
             "/app/absences/mobiles/justificatif"
     );

@@ -176,8 +176,33 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
     }
 
     @Override
+    public Map<String, Object> rejecterJustification(AbsenceRequestDto absenceRequestDto) {
+        Map<String, Object> response = new HashMap<>();
+        if (absenceRequestDto.getId() == null) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        Optional<Absence> optionalAbsence = absenceRepository.findById(String.valueOf(absenceRequestDto.getId()));
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée.");
+            return response;
+        }
+        Absence absence = optionalAbsence.get();
+        // Mettre à jour le statut de la justification
+        absence.setStatus("REFUSE"); // ou autre valeur selon votre logique métier
+        absenceRepository.save(absence);
+
+        response.put("success", true);
+        response.put("message", "Justification refusee avec succès.");
+        response.put("absence", absence);
+        return response;
+    }
+
+    @Override
     public Page<Absence> getAllAbsences(Pageable pageable) {
-        return absenceRepository.findAll(pageable);
+        return absenceRepository.findByStatusNot(Status.JUSTIFIE, pageable);
     }
 
     @Override

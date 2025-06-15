@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.data.enums.Status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +22,7 @@ public class AbsenceSimpleResponseDto {
     private String date;
     private String heure;
     private String justification;
+    List<String> justificatifs = new ArrayList<>();
     private Status status;
 
     public void AbsenceResponse(Absence absence) {

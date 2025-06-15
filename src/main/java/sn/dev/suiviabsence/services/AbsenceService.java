@@ -20,6 +20,7 @@ public interface AbsenceService {
     Optional<PointageEtudiantResponse> rechercherEtudiantPourCours(String matricule);
     ResponseEntity<String> pointerEtudiant(String matricule);
     Map<String, Object> validerJustification(AbsenceRequestDto absenceRequestDto);
+    Map<String, Object> rejecterJustification(AbsenceRequestDto absenceRequestDto);
     Page<Absence> getAllAbsences(Pageable pageable);
     Map<String, Object> saveJustificatif(String idAbsence, MultipartFile file);
 

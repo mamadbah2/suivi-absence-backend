@@ -21,6 +21,9 @@ public interface AbsenceController {
     @PostMapping("/validate")
     ResponseEntity<Map<String, Object>>validerJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/reject")
+    ResponseEntity<Map<String, Object>>rejecterJustification(@RequestBody AbsenceRequestDto absenceRequestDto);
 
     @Operation(summary = "Liste de tous les absences")
     @PreAuthorize("hasRole('ADMIN')")

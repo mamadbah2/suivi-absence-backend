@@ -337,6 +337,9 @@ public class DataLoader {
         absenceAujourdhui1.setJustification(null);
         absenceAujourdhui1.setEtudiant(e1);
         absenceAujourdhui1.setCours(coursAujourdhui1);
+        absenceAujourdhui1.addJustificatif("https://hackaton-groupe10.s3.eu-north-1.amazonaws.com/1748811756436_OK_C_EST_BON.pdf");
+        absenceAujourdhui1.addJustificatif("https://hackaton-groupe10.s3.eu-north-1.amazonaws.com/1748811846885_OK_C_EST_BON1.pdf");
+
         absenceRepository.save(absenceAujourdhui1);
         
         // Étudiant 2 absent au cours d'aujourd'hui
@@ -347,6 +350,7 @@ public class DataLoader {
         absenceAujourdhui2.setJustification(null);
         absenceAujourdhui2.setEtudiant(e2);
         absenceAujourdhui2.setCours(coursAujourdhui2);
+
         absenceRepository.save(absenceAujourdhui2);
         
         // Étudiant 3 absent au cours d'aujourd'hui (ajoutez d'autres étudiants si nécessaire)
