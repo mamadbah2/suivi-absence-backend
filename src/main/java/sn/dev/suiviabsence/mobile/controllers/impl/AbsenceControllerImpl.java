@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import sn.dev.suiviabsence.data.entities.Absence;
@@ -21,10 +22,14 @@ import sn.dev.suiviabsence.mobile.controllers.AbsenceController;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
+import sn.dev.suiviabsence.mobile.dto.requests.UploadJustificationRequest;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController("mobileAbsenceController")
@@ -165,5 +170,83 @@ public class AbsenceControllerImpl implements AbsenceController {
         System.out.println("Ses absences sont : " + response.toString());
         return response.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    @Operation(
+            summary = "Soumettre une justification avec des images",
+            description = "Permet à un étudiant de soumettre une justification textuelle et des URLs d'images pour une absence"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Justification soumise avec succès"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Données invalides ou absence introuvable"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Non authentifié"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erreur serveur lors du traitement"
+            )
+    })
+    public ResponseEntity<Map<String, Object>> soumettreJustificationAvecImages(
+            UploadJustificationRequest request,
+            String absenceId,
+            String commentaireEtudiant,
+            String motif) {
+            
+        // Log pour faciliter le débogage
+        log.info("Méthode soumettreJustificationAvecImages appelée");
+        log.info("Format de requête: " + (request != null ? "JSON" : "form-data"));
+        
+        // Variables pour stocker les valeurs finales
+        String finalAbsenceId;
+        String finalCommentaire;
+        String finalMotif;
+        List<String> imageUrls = new ArrayList<>();
+        
+        if (request != null) {
+            // Cas d'une requête JSON
+            log.info("Traitement d'une requête JSON");
+            finalAbsenceId = request.getAbsenceId();
+            finalCommentaire = request.getCommentaireEtudiant();
+            finalMotif = request.getMotif();
+            
+            if (request.getImageUrls() != null) {
+                imageUrls.addAll(request.getImageUrls());
+            }
+            
+            log.info("Requête JSON - absenceId: {}, commentaire: {}, motif: {}, imageUrls: {}", 
+                    finalAbsenceId, finalCommentaire, finalMotif, imageUrls);
+        } else {
+            // Cas d'une requête form-data classique
+            log.info("Traitement d'une requête form-data");
+            finalAbsenceId = absenceId;
+            finalCommentaire = commentaireEtudiant;
+            finalMotif = motif;
+            
+            log.info("Requête form-data - absenceId: {}, commentaire: {}, motif: {}", 
+                    finalAbsenceId, finalCommentaire, finalMotif);
+        }
+        
+        // Appel du service avec les paramètres récupérés
+        Map<String, Object> result = absenceService.soumettreJustificationAvecImages(
+                finalAbsenceId, 
+                finalCommentaire,
+                finalMotif, 
+                imageUrls);
+
+        // Retour du résultat
+        if (Boolean.TRUE.equals(result.get("success"))) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 }

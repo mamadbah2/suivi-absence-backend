@@ -10,13 +10,17 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import sn.dev.suiviabsence.mobile.dto.requests.UploadJustificationRequest;
 import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.mobile.dto.response.EtudiantAbsencesResponse;
 import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/app/absences/mobiles")
 @Tag(name = "Gestion des absences (Mobile)", description = "API pour la gestion des absences via l'application mobile")
@@ -90,4 +94,18 @@ public interface AbsenceController {
             @Parameter(description = "Matricule de l'étudiant", required = true)
             @PathVariable String matricule
     );
+
+    @Operation(summary = "Soumettre une justification avec des images", 
+               description = "Permet à un étudiant de soumettre une justification textuelle et des URLs d'images pour une absence")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Justification soumise avec succès"),
+        @ApiResponse(responseCode = "400", description = "Données invalides"),
+        @ApiResponse(responseCode = "404", description = "Absence non trouvée"),
+        @ApiResponse(responseCode = "401", description = "Non autorisé - Token JWT manquant ou invalide")
+    })
+    @PostMapping(value = "/justification/upload", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    ResponseEntity<Map<String, Object>> soumettreJustificationAvecImages(@RequestBody(required = false) UploadJustificationRequest request,
+                                                                          @RequestParam(required = false) String absenceId,
+                                                                          @RequestParam(required = false) String commentaireEtudiant,
+                                                                          @RequestParam(required = false) String motif);
 }

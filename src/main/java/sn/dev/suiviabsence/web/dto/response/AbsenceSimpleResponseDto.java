@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.data.enums.Status;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class AbsenceSimpleResponseDto {
     private String heure;
     private String justification;
     private Status status;
+    private List<String> justificatifsUrls; // URLs des images justificatives
 
     public void AbsenceResponse(Absence absence) {
         this.id = absence.getId();
@@ -32,5 +35,6 @@ public class AbsenceSimpleResponseDto {
         this.date = absence.getDate();
         this.heure = absence.getHeure();
         this.status = absence.getStatus();
+        this.justificatifsUrls = absence.getJustificatifsUrls();
     }
 }

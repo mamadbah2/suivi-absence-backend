@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sn.dev.suiviabsence.data.entities.Absence;
-import sn.dev.suiviabsence.mobile.dto.response.AbsenceMobileSimpleResponse;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
 import sn.dev.suiviabsence.web.dto.response.AbsenceSimpleResponseDto;
 

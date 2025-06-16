@@ -29,6 +29,7 @@ import sn.dev.suiviabsence.mobile.dto.response.PointageEtudiantResponse;
 import sn.dev.suiviabsence.services.AbsenceService;
 import sn.dev.suiviabsence.utils.mappers.MapperAbsenceMobile;
 import sn.dev.suiviabsence.web.dto.requests.AbsenceRequestDto;
+import sn.dev.suiviabsence.services.storage.CloudStorageService;
 
 @Service
 @Primary
@@ -37,6 +38,7 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
 
     private final AbsenceRepository absenceRepository;
     private final EtudiantRepository etudiantRepository;
+    private final CloudStorageService cloudStorageService;
 
     @Override
     public List<AbsenceMobileSimpleResponse> getPremiersEtudiantsDuJour() {
@@ -206,6 +208,7 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
                     detail.setStatus(absence.getStatus());
                     detail.setJustification(absence.getJustification());
                     detail.setHeurePointage(absence.getHeure());
+                    detail.setJustificatifsUrls(absence.getJustificatifsUrls());
                     return detail;
                 })
                 .collect(Collectors.toList());
@@ -243,6 +246,86 @@ public class AbsenceMobileServiceImpl implements AbsenceService {
         response.put("success", true);
         response.put("message", "Justification mise à jour avec succès.");
         response.put("absence", absence);
+        return response;
+    }
+
+    @Override
+    public Map<String, Object> soumettreJustificationAvecImages(String absenceId, String commentaire, String motif, List<String> imageUrls) {
+        Map<String, Object> response = new HashMap<>();
+        
+        // Vérification des paramètres
+        if (absenceId == null || absenceId.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        
+        if (commentaire == null || commentaire.trim().isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Justification textuelle requise.");
+            return response;
+        }
+        
+        // Recherche de l'absence par ID
+        Optional<Absence> optionalAbsence = absenceRepository.findById(absenceId);
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée avec l'ID fourni.");
+            return response;
+        }
+        
+        Absence absence = optionalAbsence.get();
+        
+        // Vérification que l'absence peut être justifiée (n'est pas déjà justifiée et validée)
+        if (absence.getStatus() == Status.JUSTIFIE) {
+            response.put("success", false);
+            response.put("message", "Cette absence est déjà justifiée.");
+            return response;
+        }
+        
+        try {
+            // Liste pour stocker les URLs des images
+            List<String> justificatifsUrls = new ArrayList<>();
+            
+            // Ajouter les URLs d'images si fournies
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                // Limiter à 5 images maximum et filtrer les URLs vides
+                justificatifsUrls = imageUrls.stream()
+                    .filter(url -> url != null && !url.trim().isEmpty())
+                    .limit(5)
+                    .collect(Collectors.toList());
+            }
+            
+            // Mise à jour de l'absence
+            absence.setJustification(commentaire);
+            // Ajouter le motif si fourni (peut être stocké avec le commentaire)
+            if (motif != null && !motif.trim().isEmpty()) {
+                absence.setJustification("[" + motif + "] " + commentaire);
+            } else {
+                absence.setJustification(commentaire);
+            }
+            absence.setJustificatifsUrls(justificatifsUrls);
+            
+            // Changer le statut en "justification en attente"
+            absence.setStatus(Status.JUSTIFIE);
+            
+            // Enregistrer la date de soumission de la justification
+            absence.setDate(LocalDate.now().toString());
+            absence.setHeure(LocalTime.now().toString());
+            
+            // Sauvegarder les modifications
+            absenceRepository.save(absence);
+            
+            response.put("success", true);
+            response.put("message", "Justification soumise avec succès. Elle est en attente de validation.");
+            response.put("absence", absence);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Une erreur est survenue lors du traitement de la justification: " + e.getMessage());
+            e.printStackTrace(); // Pour le débogage en environnement de développement
+        }
+        
         return response;
     }
 }

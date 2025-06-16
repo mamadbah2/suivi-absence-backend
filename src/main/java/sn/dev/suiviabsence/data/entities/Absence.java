@@ -19,6 +19,7 @@ public class Absence {
    Etudiant etudiant;
    Cours cours;
    Status status;
+   List<String> justificatifsUrls; // Liste des URLs des images justificatives stockées dans le cloud
 
    public void setStatus(Status nouveauStatut) {
       this.status = nouveauStatut;

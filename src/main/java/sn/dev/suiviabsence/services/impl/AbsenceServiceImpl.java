@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import sn.dev.suiviabsence.data.entities.Absence;
 import sn.dev.suiviabsence.data.entities.Cours;
 import sn.dev.suiviabsence.data.entities.Etudiant;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -52,6 +55,7 @@ public class AbsenceServiceImpl implements AbsenceService {
             List<Etudiant> etudiants = etudiantRepository.findByClasseId(cours.getClasse().getId());
             for (Etudiant e : etudiants) {
                 AbsenceMobileSimpleResponse dto = new AbsenceMobileSimpleResponse();
+                dto.setMatricule(e.getMatricule()); // Ajout du matricule de l'étudiant
                 dto.setNom(e.getNom());
                 dto.setPrenom(e.getPrenom());
                 dto.setClasse(cours.getClasse().getNom());
@@ -203,4 +207,73 @@ public class AbsenceServiceImpl implements AbsenceService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAbsencesEtudiant'");
     }
+
+    @Override
+    public Map<String, Object> soumettreJustificationAvecImages(String absenceId, String commentaire, String motif,
+            List<String> imageUrls) {
+        Map<String, Object> response = new HashMap<>();
+        
+        // Vérification des paramètres
+        if (absenceId == null || absenceId.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "ID d'absence manquant.");
+            return response;
+        }
+        
+        if (commentaire == null || commentaire.trim().isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Justification textuelle requise.");
+            return response;
+        }
+        
+        // Recherche de l'absence par ID
+        Optional<Absence> optionalAbsence = absenceRepository.findById(absenceId);
+        if (optionalAbsence.isEmpty()) {
+            response.put("success", false);
+            response.put("message", "Absence non trouvée avec l'ID fourni.");
+            return response;
+        }
+        
+        Absence absence = optionalAbsence.get();
+        
+        try {
+            // Liste pour stocker les URLs des images
+            List<String> justificatifsUrls = new ArrayList<>();
+            
+            // Ajouter les URLs d'images si fournies
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                // Limiter à 5 images maximum et filtrer les URLs vides
+                justificatifsUrls = imageUrls.stream()
+                    .filter(url -> url != null && !url.trim().isEmpty())
+                    .limit(5)
+                    .collect(Collectors.toList());
+            }
+            
+            // Mise à jour de l'absence avec le motif et le commentaire
+            if (motif != null && !motif.trim().isEmpty()) {
+                absence.setJustification("[" + motif + "] " + commentaire);
+            } else {
+                absence.setJustification(commentaire);
+            }
+            absence.setJustificatifsUrls(justificatifsUrls);
+            
+            // Marquer comme justifié en attente de validation
+            absence.setStatus("JUSTIFIE_EN_ATTENTE");
+            
+            // Sauvegarder les modifications
+            absenceRepository.save(absence);
+            
+            response.put("success", true);
+            response.put("message", "Justification soumise avec succès.");
+            response.put("absence", absence);
+            
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Une erreur est survenue lors du traitement de la justification: " + e.getMessage());
+        }
+        
+        return response;
+    }
+
+    
 }

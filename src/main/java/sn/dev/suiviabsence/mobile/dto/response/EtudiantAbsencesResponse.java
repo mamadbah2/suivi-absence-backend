@@ -59,5 +59,8 @@ public class EtudiantAbsencesResponse {
 
         @Schema(description = "Heure de pointage (si applicable)", example = "07:55")
         private String heurePointage;
+
+        @Schema(description = "URLs des images justificatives (si applicable)")
+        private List<String> justificatifsUrls;
     }
 }

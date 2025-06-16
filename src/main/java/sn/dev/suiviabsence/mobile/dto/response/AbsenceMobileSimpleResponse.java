@@ -11,13 +11,15 @@ import sn.dev.suiviabsence.data.enums.Status;
 @NoArgsConstructor
 @Schema(description = "Réponse simplifiée pour les absences mobile")
 public class AbsenceMobileSimpleResponse {
+    @Schema(description = "Matricule de l'étudiant", example = "ETD001")
+    String matricule;
     @Schema(description = "Nom  de l'étudiant", example = "Diop")
     String nom;
     @Schema(description = "prenom  de l'étudiant", example = "Amadou")
     String prenom;
     @Schema(description = "Nom de la classe", example = "GLRS2")
     String classe;
-    @Schema(description = "le module", example = "Management du processu")
+    @Schema(description = "le module", example = "Management du processus")
     String module;
     @Schema(description = "Heure de début du cours", example = "08:00")
     String heureDebut;
