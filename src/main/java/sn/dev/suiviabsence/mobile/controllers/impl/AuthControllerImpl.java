@@ -85,6 +85,7 @@ public class AuthControllerImpl implements AuthController {
                         checkUser.getNom(),
                         checkUser.getPrenom(),
                         checkUser.getRole(),
+                        checkUser.getImage(),
                         etudiant.getMatricule()
                 );
             } else {
@@ -95,7 +96,8 @@ public class AuthControllerImpl implements AuthController {
                         checkUser.getNom(),
                         checkUser.getPrenom(),
                         checkUser.getRole(),
-                        ""
+                        checkUser.getImage(),
+                        null
                 );
             }
 

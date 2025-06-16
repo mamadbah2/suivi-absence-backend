@@ -31,14 +31,6 @@ public class UserLoginResponse {
         this.token = token;
     }
     
-    // Constructeur pour les utilisateurs non-étudiants
-    public UserLoginResponse(String token, String email, String nom, String prenom, Role role, String image) {
-        this.token = token;
-        this.email = email;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.role = role;
-        this.image = image;
-        this.matricule = null;
-    }
+    // Constructeur pour les utilisateurs non-étudiants (mis à jour)
+    
 }
